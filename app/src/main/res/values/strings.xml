@@ -7,11 +7,14 @@
     <string name="sign_in">Sign in</string>
     <string name="sign_up_here">Sign up here!</string>
     <string name="cd_image_sign_up">Sign up here!</string>
-    <string name="activity_register_title">Register</string>
-    <string name="activity_register_subtitle">Complete the fields</string>
+    <string name="activity_register_title">Register.</string>
+    <string name="activity_register_subtitle">Complete the fields.</string>
     <string name="name">Name</string>
     <string name="lastname">Lastname</string>
     <string name="number_phone">Number phone</string>
     <string name="confirm_password">Confirm Password</string>
     <string name="register">Register</string>
+    <string name="err_empty_fields">The fields are empty.</string>
+    <string name="err_invalid_email">Insert an email valid</string>
+    <string name="err_different_passwords">Passwords don\'t match</string>
 </resources>
