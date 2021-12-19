@@ -53,7 +53,7 @@
             android:padding="16dp"
             android:textColor="?attr/colorOnPrimary"
             android:textColorHint="?attr/colorOnPrimary"
-            tools:text="QWEasdzxc" />
+            tools:text="password" />
 
     </LinearLayout>
 
