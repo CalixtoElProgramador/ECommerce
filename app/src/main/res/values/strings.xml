@@ -1,10 +1,17 @@
 <resources>
     <string name="app_name">ECommerce</string>
-    <string name="login">Login.</string>
-    <string name="activity_login_description">Enter your email and password.</string>
+    <string name="activity_login_title">Login.</string>
+    <string name="activity_login_subtitle">Enter your email and password.</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
     <string name="sign_in">Sign in</string>
     <string name="sign_up_here">Sign up here!</string>
     <string name="cd_image_sign_up">Sign up here!</string>
+    <string name="activity_register_title">Register</string>
+    <string name="activity_register_subtitle">Complete the fields</string>
+    <string name="name">Name</string>
+    <string name="lastname">Lastname</string>
+    <string name="number_phone">Number phone</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="register">Register</string>
 </resources>

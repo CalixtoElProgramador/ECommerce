@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.MainActivity">
+    tools:context=".activities.RegisterActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -16,7 +16,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="48dp"
-            android:text="@string/activity_login_title"
+            android:text="@string/activity_register_title"
             android:textAppearance="?attr/textAppearanceHeadline3"
             android:textColor="?attr/colorPrimary" />
 
@@ -24,14 +24,42 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
-            android:text="@string/activity_login_subtitle"
+            android:text="@string/activity_register_subtitle"
             android:textAppearance="?attr/textAppearanceBody1" />
 
         <EditText
-            android:id="@+id/input_email"
+            android:id="@+id/input_name"
             android:layout_width="match_parent"
             android:layout_height="56dp"
             android:layout_marginTop="32dp"
+            android:autofillHints="name"
+            android:background="@drawable/bg_edit_text_login"
+            android:hint="@string/name"
+            android:inputType="textPersonName"
+            android:padding="16dp"
+            android:textColor="?attr/colorOnPrimary"
+            android:textColorHint="?attr/colorOnPrimary"
+            tools:text="Aaron" />
+
+        <EditText
+            android:id="@+id/input_lastname"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginTop="8dp"
+            android:autofillHints="name"
+            android:background="@drawable/bg_edit_text_login"
+            android:hint="@string/lastname"
+            android:inputType="textPersonName"
+            android:padding="16dp"
+            android:textColor="?attr/colorOnPrimary"
+            android:textColorHint="?attr/colorOnPrimary"
+            tools:text="Calixto" />
+
+        <EditText
+            android:id="@+id/input_registerEmail"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginTop="8dp"
             android:autofillHints="emailAddress"
             android:background="@drawable/bg_edit_text_login"
             android:hint="@string/email"
@@ -42,13 +70,41 @@
             tools:text="aaron.calixto@outlook.com" />
 
         <EditText
-            android:id="@+id/input_password"
+            android:id="@+id/input_registerPhone"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginTop="8dp"
+            android:autofillHints="phone"
+            android:background="@drawable/bg_edit_text_login"
+            android:hint="@string/number_phone"
+            android:inputType="phone"
+            android:padding="16dp"
+            android:textColor="?attr/colorOnPrimary"
+            android:textColorHint="?attr/colorOnPrimary"
+            tools:text="+52 999 192 5195" />
+
+        <EditText
+            android:id="@+id/input_registerPassword"
             android:layout_width="match_parent"
             android:layout_height="56dp"
             android:layout_marginTop="8dp"
             android:autofillHints="password"
             android:background="@drawable/bg_edit_text_login"
             android:hint="@string/password"
+            android:inputType="textPassword"
+            android:padding="16dp"
+            android:textColor="?attr/colorOnPrimary"
+            android:textColorHint="?attr/colorOnPrimary"
+            tools:text="password" />
+
+        <EditText
+            android:id="@+id/input_registerConfirmPassword"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginTop="8dp"
+            android:autofillHints="password"
+            android:background="@drawable/bg_edit_text_login"
+            android:hint="@string/confirm_password"
             android:inputType="textPassword"
             android:padding="16dp"
             android:textColor="?attr/colorOnPrimary"
@@ -66,21 +122,21 @@
         android:padding="16dp">
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_signIn"
+            android:id="@+id/btn_register"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="?attr/colorSecondary"
-            android:text="@string/sign_in"
+            android:text="@string/register"
             android:textColor="?attr/colorOnSecondary"
             app:cornerRadius="16dp" />
 
         <ImageView
-            android:id="@+id/img_singUp"
+            android:id="@+id/img_backToLogin"
             android:layout_width="32dp"
             android:layout_height="32dp"
             android:layout_marginTop="16dp"
             android:contentDescription="@string/cd_image_sign_up"
-            android:src="@drawable/ic_arrow_forward_ios"
+            android:src="@drawable/ic_arrow_back_ios"
             app:tint="?attr/colorPrimary" />
 
         <TextView
@@ -88,10 +144,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:text="@string/sign_up_here"
-            android:textColor="?attr/colorPrimary"
-            android:textAppearance="?attr/textAppearanceOverline" />
+            android:textAppearance="?attr/textAppearanceOverline"
+            android:textColor="?attr/colorPrimary" />
 
     </LinearLayout>
-
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
