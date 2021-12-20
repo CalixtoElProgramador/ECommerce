@@ -35,6 +35,10 @@ class SharedPref(activity: Activity) {
         return prefs?.getString(key, "")
     }
 
+    fun remove(key: String) {
+        prefs?.edit()?.remove(key)?.apply()
+    }
+
     companion object {
         private const val TAG = "SharedPref"
     }
