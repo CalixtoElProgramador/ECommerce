@@ -24,7 +24,9 @@ module.exports = {
             return res.status(200).json({
                 success: true,
                 message: 'The register was realized successfully',
-                data: data.id
+                data: {
+                    'id': data.id
+                }
             });
         }
         catch (error) {

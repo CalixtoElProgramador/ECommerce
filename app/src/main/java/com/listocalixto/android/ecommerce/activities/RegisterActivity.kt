@@ -2,16 +2,25 @@ package com.listocalixto.android.ecommerce.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.EditText
 import android.widget.ImageView
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.snackbar.Snackbar
 import com.listocalixto.android.ecommerce.R
+import com.listocalixto.android.ecommerce.models.ResponseHttp
+import com.listocalixto.android.ecommerce.models.User
+import com.listocalixto.android.ecommerce.providers.UsersProvider
 import com.listocalixto.android.ecommerce.util.isEmailValid
 import com.listocalixto.android.ecommerce.util.showSnackbar
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class RegisterActivity : AppCompatActivity() {
+
+    private val userProvider = UsersProvider()
 
     private var imgBackToLogin: ImageView? = null
     private var inputName: EditText? = null
@@ -71,6 +80,25 @@ class RegisterActivity : AppCompatActivity() {
                 )
             }
             else -> {
+                val user = User(
+                    name = name,
+                    lastname = lastname,
+                    email = email,
+                    phone = phone,
+                    password = pass
+                )
+                sendDataToServer(user)
+            }
+        }
+
+    }
+
+    private fun sendDataToServer(user: User) {
+        userProvider.register(user)?.enqueue(object: Callback<ResponseHttp> {
+            override fun onResponse(call: Call<ResponseHttp>, response: Response<ResponseHttp>) {
+                Log.d(TAG, "onResponse: $response")
+                Log.d(TAG, "body: ${response.body()}")
+
                 showSnackbar(
                     view = layout,
                     snackbarText = R.string.app_name,
@@ -79,8 +107,19 @@ class RegisterActivity : AppCompatActivity() {
                     isAnError = false
                 )
             }
-        }
 
+            override fun onFailure(call: Call<ResponseHttp>, t: Throwable) {
+                Log.d(TAG, "onFailure: An error was happen: ${t.message}")
+                showSnackbar(
+                    view = layout,
+                    snackbarText = R.string.err_register_new_user,
+                    timeLength = Snackbar.LENGTH_SHORT,
+                    anchorView = btnRegister,
+                    isAnError = true
+                )
+
+            }
+        })
     }
 
     private fun setupViews() {
