@@ -26,10 +26,55 @@ CREATE TABLE users(
 DROP TABLE IF EXISTS user_has_roles CASCADE;
 CREATE TABLE user_has_roles(
 	id_user BIGSERIAL NOT NULL,
-	id_rol BIGSERIAL NOT NULL,
+	id_role BIGSERIAL NOT NULL,
 	created_at TIMESTAMP(0) NOT NULL,
 	updated_at TIMESTAMP(0) NOT NULL,
 	FOREIGN KEY(id_user) REFERENCES users(id) ON UPDATE CASCADE ON DELETE CASCADE,
-	FOREIGN KEY(id_rol) REFERENCES roles(id) ON UPDATE CASCADE ON DELETE CASCADE,
-	PRIMARY KEY(id_user, id_rol)	
+	FOREIGN KEY(id_role) REFERENCES roles(id) ON UPDATE CASCADE ON DELETE CASCADE,
+	PRIMARY KEY(id_user, id_role)	
+);
+
+INSERT INTO roles(
+	name,
+	route,
+	image,
+	created_at,
+	updated_at
+)
+VALUES(
+	'CLIENT',
+	'client/home',
+	'https://cdn-icons-png.flaticon.com/512/1257/1257081.png',
+	'2021-10-04',
+	'2021-10-04'
+);
+
+INSERT INTO roles(
+	name,
+	route,
+	image,
+	created_at,
+	updated_at
+)
+VALUES(
+	'RESTAURANT',
+	'restaurant/home',
+	'https://cdn-icons-png.flaticon.com/512/808/808175.png',
+	'2021-10-04',
+	'2021-10-04'
+);
+
+INSERT INTO roles(
+	name,
+	route,
+	image,
+	created_at,
+	updated_at
+)
+VALUES(
+	'DELIVERY',
+	'delivery/home',
+	'https://cdn-icons-png.flaticon.com/512/1254/1254223.png',
+	'2021-10-04',
+	'2021-10-04'
 );

@@ -1,5 +1,6 @@
 package com.listocalixto.android.ecommerce.activities
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -8,10 +9,13 @@ import android.widget.ImageView
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.snackbar.Snackbar
+import com.google.gson.Gson
 import com.listocalixto.android.ecommerce.R
+import com.listocalixto.android.ecommerce.activities.client.ClientActivity
 import com.listocalixto.android.ecommerce.models.ResponseHttp
 import com.listocalixto.android.ecommerce.models.User
 import com.listocalixto.android.ecommerce.providers.UsersProvider
+import com.listocalixto.android.ecommerce.util.SharedPref
 import com.listocalixto.android.ecommerce.util.isEmailValid
 import com.listocalixto.android.ecommerce.util.showSnackbar
 import retrofit2.Call
@@ -94,18 +98,21 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     private fun registerUser(user: User) {
-        userProvider.register(user)?.enqueue(object: Callback<ResponseHttp> {
+        userProvider.register(user)?.enqueue(object : Callback<ResponseHttp> {
             override fun onResponse(call: Call<ResponseHttp>, response: Response<ResponseHttp>) {
-                Log.d(TAG, "onResponse: $response")
-                Log.d(TAG, "body: ${response.body()}")
 
-                showSnackbar(
-                    view = layout,
-                    snackbarText = R.string.app_name,
-                    timeLength = Snackbar.LENGTH_SHORT,
-                    anchorView = btnRegister,
-                    isAnError = false
-                )
+                if (response.body()?.isSuccess == true) {
+                    saveUserInSession(response.body()?.data.toString())
+                    navigateToClientActivity()
+                    showSnackbar(
+                        view = layout,
+                        snackbarText = R.string.app_name,
+                        timeLength = Snackbar.LENGTH_SHORT,
+                        anchorView = btnRegister,
+                        isAnError = false
+                    )
+                }
+
             }
 
             override fun onFailure(call: Call<ResponseHttp>, t: Throwable) {
@@ -134,8 +141,21 @@ class RegisterActivity : AppCompatActivity() {
         layout = findViewById(R.id.registerActivityLayout)
     }
 
+    private fun saveUserInSession(data: String) {
+        val sharedPref = SharedPref(this)
+        val gson = Gson()
+        val user = gson.fromJson(data, User::class.java)
+        sharedPref.save("user", user)
+    }
+
     private fun navigateToLoginActivity() {
         onBackPressed()
+    }
+
+    private fun navigateToClientActivity() {
+        val i = Intent(this, ClientActivity::class.java)
+        startActivity(i)
+        finish()
     }
 
     companion object {

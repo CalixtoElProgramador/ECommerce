@@ -1,4 +1,5 @@
 const User = require('../models/user');
+const Role = require('../models/role');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const keys = require('../config/keys');
@@ -24,12 +25,26 @@ module.exports = {
         try {
             const user = req.body;
             const data = await User.create(user);
+
+            await Role.create(data.id, 1);
+            const token = jwt.sign({ id: data.id, email: user.email }, keys.secretOrKey, {
+                // expiresIn: 
+            })
+
+            const myData = {
+                id: data.id,
+                name: user.name,
+                lastname: user.lastname,
+                email: user.email,
+                phone: user.phone,
+                image: user.image,
+                session_token: `JWT ${token}`
+            };
+
             return res.status(200).json({
                 success: true,
                 message: 'The register was realized successfully',
-                data: {
-                    'id': data.id
-                }
+                data: myData
             });
         }
         catch (error) {
