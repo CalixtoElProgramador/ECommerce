@@ -9,9 +9,13 @@ import android.widget.ImageView
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.snackbar.Snackbar
+import com.google.gson.Gson
 import com.listocalixto.android.ecommerce.R
+import com.listocalixto.android.ecommerce.activities.client.ClientActivity
 import com.listocalixto.android.ecommerce.models.ResponseHttp
+import com.listocalixto.android.ecommerce.models.User
 import com.listocalixto.android.ecommerce.providers.UsersProvider
+import com.listocalixto.android.ecommerce.util.SharedPref
 import com.listocalixto.android.ecommerce.util.isEmailValid
 import com.listocalixto.android.ecommerce.util.showSnackbar
 import retrofit2.Call
@@ -32,6 +36,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        getUserFromSession()
         setupViews()
 
         btnSignIn?.setOnClickListener { login() }
@@ -81,13 +86,8 @@ class MainActivity : AppCompatActivity() {
             override fun onResponse(call: Call<ResponseHttp>, response: Response<ResponseHttp>) {
                 Log.d(TAG, "onResponse: ${response.body()}")
                 if (response.body()?.isSuccess == true) {
-                    showSnackbar(
-                        view = layout,
-                        snackbarText = R.string.app_name,
-                        timeLength = Snackbar.LENGTH_SHORT,
-                        anchorView = btnSignIn,
-                        isAnError = false
-                    )
+                    saveUserInSession(response.body()?.data.toString())
+                    navigateToClientActivity()
                 } else {
                     showSnackbar(
                         view = layout,
@@ -111,9 +111,30 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
+    private fun saveUserInSession(data: String) {
+        val sharedPref = SharedPref(this)
+        val gson = Gson()
+        val user = gson.fromJson(data, User::class.java)
+        sharedPref.save("user", user)
+    }
+
+    private fun getUserFromSession() {
+        val sharedPref = SharedPref(this)
+        if (!sharedPref.getData("user").isNullOrBlank()) {
+            navigateToClientActivity()
+        }
+
+    }
+
     private fun navigateToRegisterActivity() {
         val i = Intent(this, RegisterActivity::class.java)
         startActivity(i)
+    }
+
+    private fun navigateToClientActivity() {
+        val i = Intent(this, ClientActivity::class.java)
+        startActivity(i)
+        finish()
     }
 
     companion object {
