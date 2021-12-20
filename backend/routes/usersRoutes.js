@@ -7,5 +7,6 @@ module.exports = (app) => {
     
     // POST - SAVE DATA
     app.post('/api/users/create', UsersController.register);
+    app.post('/api/users/login', UsersController.login);
 
 }

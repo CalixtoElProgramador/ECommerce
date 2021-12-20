@@ -15,6 +15,48 @@ User.getAll = () => {
 
 }
 
+User.findById = (id, callback) => {
+    const sql = `
+    SELECT
+        id,
+        email,
+        name,
+        lastname,
+        phone,
+        image,
+        password,
+        session_token
+    FROM
+        users
+    WHERE
+        id = $1
+    `;
+
+    return db.oneOrNone(sql, id).then(user => { callback(null, user) })
+
+}
+
+User.findByEmail = (email) => {
+    const sql = `
+    SELECT
+        id,
+        email,
+        name,
+        lastname,
+        phone,
+        image,
+        password,
+        session_token
+    FROM
+        users
+    WHERE
+        email = $1
+    `;
+
+    return db.oneOrNone(sql, email);
+
+}
+
 User.create = async (user) => {
 
     const hash = await bcrypt.hash(user.password, 10);
