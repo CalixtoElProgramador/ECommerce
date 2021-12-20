@@ -3,16 +3,24 @@ package com.listocalixto.android.ecommerce.activities
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.EditText
 import android.widget.ImageView
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.snackbar.Snackbar
 import com.listocalixto.android.ecommerce.R
+import com.listocalixto.android.ecommerce.models.ResponseHttp
+import com.listocalixto.android.ecommerce.providers.UsersProvider
 import com.listocalixto.android.ecommerce.util.isEmailValid
 import com.listocalixto.android.ecommerce.util.showSnackbar
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class MainActivity : AppCompatActivity() {
+
+    private val usersProvider = UsersProvider()
 
     private var imgSignUp: ImageView? = null
     private var inputEmail: EditText? = null
@@ -62,16 +70,45 @@ class MainActivity : AppCompatActivity() {
                 )
             }
             else -> {
-                showSnackbar(
-                    view = layout,
-                    snackbarText = R.string.app_name,
-                    timeLength = Snackbar.LENGTH_SHORT,
-                    anchorView = btnSignIn,
-                    isAnError = false
-                )
+                authenticateUser(email, password)
             }
         }
 
+    }
+
+    private fun authenticateUser(email: String, password: String) {
+        usersProvider.login(email, password)?.enqueue(object : Callback<ResponseHttp> {
+            override fun onResponse(call: Call<ResponseHttp>, response: Response<ResponseHttp>) {
+                Log.d(TAG, "onResponse: ${response.body()}")
+                if (response.body()?.isSuccess == true) {
+                    showSnackbar(
+                        view = layout,
+                        snackbarText = R.string.app_name,
+                        timeLength = Snackbar.LENGTH_SHORT,
+                        anchorView = btnSignIn,
+                        isAnError = false
+                    )
+                } else {
+                    showSnackbar(
+                        view = layout,
+                        snackbarText = R.string.err_incorrect_inputs,
+                        timeLength = Snackbar.LENGTH_SHORT,
+                        anchorView = btnSignIn,
+                        isAnError = true
+                    )
+                }
+            }
+
+            override fun onFailure(call: Call<ResponseHttp>, t: Throwable) {
+                showSnackbar(
+                    view = layout,
+                    snackbarText = R.string.err_an_error_was_happened,
+                    timeLength = Snackbar.LENGTH_LONG,
+                    anchorView = btnSignIn,
+                    isAnError = true
+                )
+            }
+        })
     }
 
     private fun navigateToRegisterActivity() {

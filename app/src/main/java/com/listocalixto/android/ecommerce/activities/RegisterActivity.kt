@@ -87,13 +87,13 @@ class RegisterActivity : AppCompatActivity() {
                     phone = phone,
                     password = pass
                 )
-                sendDataToServer(user)
+                registerUser(user)
             }
         }
 
     }
 
-    private fun sendDataToServer(user: User) {
+    private fun registerUser(user: User) {
         userProvider.register(user)?.enqueue(object: Callback<ResponseHttp> {
             override fun onResponse(call: Call<ResponseHttp>, response: Response<ResponseHttp>) {
                 Log.d(TAG, "onResponse: $response")
