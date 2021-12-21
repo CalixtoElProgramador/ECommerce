@@ -27,4 +27,7 @@
     <string name="cd_image_role_item">The icon of the role</string>
     <string name="delivery_home">Delivery Home</string>
     <string name="restaurant_home">Restaurant Home</string>
+    <string name="upload_profile_photo">Upload a profile picture</string>
+    <string name="confirm">Confirm</string>
+    <string name="skip_this_step">Skip this step</string>
 </resources>

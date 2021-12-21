@@ -14,6 +14,9 @@
         android:theme="@style/Theme.ECommerce"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".activities.SaveImageActivity"
+            android:exported="true" />
+        <activity
             android:name=".activities.delivery.DeliveryHomeActivity"
             android:exported="true" />
         <activity
