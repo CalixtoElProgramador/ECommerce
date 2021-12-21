@@ -67,6 +67,8 @@ class SaveImageActivity : AppCompatActivity() {
             override fun onResponse(call: Call<ResponseHttp>, response: Response<ResponseHttp>) {
                 Log.d(TAG, "onResponse: Response - $response")
                 Log.d(TAG, "onResponse: Body - ${response.body()}")
+                saveUserInSession(response.body()?.data.toString())
+                navigateToClientActivity()
             }
 
             override fun onFailure(call: Call<ResponseHttp>, t: Throwable) {
@@ -80,6 +82,12 @@ class SaveImageActivity : AppCompatActivity() {
                 )
             }
         })
+    }
+
+    private fun saveUserInSession(data: String) {
+        val gson = Gson()
+        val user = gson.fromJson(data, User::class.java)
+        sharedPref?.save("user", user)
     }
 
     private fun getUserFromSession() {

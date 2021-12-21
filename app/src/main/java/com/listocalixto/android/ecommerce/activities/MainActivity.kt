@@ -135,6 +135,8 @@ class MainActivity : AppCompatActivity() {
                     "DELIVERY" -> { navigateToDeliveryHomeActivity() }
                     else -> { navigateToClientActivity() }
                 }
+            } else {
+                navigateToClientActivity()
             }
         }
 
