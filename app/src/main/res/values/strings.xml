@@ -30,4 +30,5 @@
     <string name="upload_profile_photo">Upload a profile picture</string>
     <string name="confirm">Confirm</string>
     <string name="skip_this_step">Skip this step</string>
+    <string name="err_missing_image">Choose an image to upload on your profile</string>
 </resources>

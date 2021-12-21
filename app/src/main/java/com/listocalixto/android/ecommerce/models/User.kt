@@ -1,5 +1,6 @@
 package com.listocalixto.android.ecommerce.models
 
+import com.google.gson.Gson
 import com.google.gson.annotations.SerializedName
 
 data class User(
@@ -30,4 +31,9 @@ data class User(
                 "password='$password', image=$image, sessionToken=$sessionToken, isAvailable=$isAvailable, " +
                 "roles=$roles)"
     }
+
+    fun toJson(): String {
+        return Gson().toJson(this)
+    }
+
 }

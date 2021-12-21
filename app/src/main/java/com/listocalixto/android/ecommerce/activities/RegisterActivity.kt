@@ -11,7 +11,6 @@ import com.google.android.material.button.MaterialButton
 import com.google.android.material.snackbar.Snackbar
 import com.google.gson.Gson
 import com.listocalixto.android.ecommerce.R
-import com.listocalixto.android.ecommerce.activities.client.ClientActivity
 import com.listocalixto.android.ecommerce.models.ResponseHttp
 import com.listocalixto.android.ecommerce.models.User
 import com.listocalixto.android.ecommerce.providers.UsersProvider
@@ -103,7 +102,7 @@ class RegisterActivity : AppCompatActivity() {
 
                 if (response.body()?.isSuccess == true) {
                     saveUserInSession(response.body()?.data.toString())
-                    navigateToClientActivity()
+                    navigateToSaveImageActivity()
                     showSnackbar(
                         view = layout,
                         snackbarText = R.string.app_name,
@@ -152,8 +151,9 @@ class RegisterActivity : AppCompatActivity() {
         onBackPressed()
     }
 
-    private fun navigateToClientActivity() {
-        val i = Intent(this, ClientActivity::class.java)
+    private fun navigateToSaveImageActivity() {
+        val i = Intent(this, SaveImageActivity::class.java)
+        i.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         startActivity(i)
         finish()
     }
