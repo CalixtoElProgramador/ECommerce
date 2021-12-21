@@ -87,7 +87,6 @@ class MainActivity : AppCompatActivity() {
                 Log.d(TAG, "onResponse: ${response.body()}")
                 if (response.body()?.isSuccess == true) {
                     saveUserInSession(response.body()?.data.toString())
-                    navigateToClientActivity()
                 } else {
                     showSnackbar(
                         view = layout,
@@ -116,6 +115,11 @@ class MainActivity : AppCompatActivity() {
         val gson = Gson()
         val user = gson.fromJson(data, User::class.java)
         sharedPref.save("user", user)
+        if (user?.roles?.size!! > 1) {
+            navigateToSelectRolesActivity()
+        } else {
+            navigateToClientActivity()
+        }
     }
 
     private fun getUserFromSession() {
@@ -133,6 +137,12 @@ class MainActivity : AppCompatActivity() {
 
     private fun navigateToClientActivity() {
         val i = Intent(this, ClientActivity::class.java)
+        startActivity(i)
+        finish()
+    }
+
+    private fun navigateToSelectRolesActivity() {
+        val i = Intent(this, SelectRolesActivity::class.java)
         startActivity(i)
         finish()
     }

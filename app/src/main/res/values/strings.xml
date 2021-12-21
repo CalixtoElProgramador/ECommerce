@@ -23,4 +23,5 @@
     <string name="err_an_error_was_happened">An error was happened. Try again. If it still fails, try again later.</string>
     <string name="activity_client_title">Client Home</string>
     <string name="logout">Logout</string>
+    <string name="select_a_role">Select A Role</string>
 </resources>

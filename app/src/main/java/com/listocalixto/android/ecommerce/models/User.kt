@@ -20,11 +20,14 @@ data class User(
     @SerializedName("session_token")
     val sessionToken: String? = null,
     @SerializedName("is_available")
-    val isAvailable: Boolean? = null
+    val isAvailable: Boolean? = null,
+    @SerializedName("roles")
+    val roles: ArrayList<Role>? = null
 ) {
 
     override fun toString(): String {
-        return "User(id='$id', name='$name', lastname='$lastname', email='$email', phone='$phone', " +
-                "password='$password', image='$image', sessionToken='$sessionToken', isAvailable=$isAvailable)"
+        return "User(id=$id, name='$name', lastname='$lastname', email='$email', phone='$phone', " +
+                "password='$password', image=$image, sessionToken=$sessionToken, isAvailable=$isAvailable, " +
+                "roles=$roles)"
     }
 }

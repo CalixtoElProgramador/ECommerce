@@ -14,6 +14,9 @@
         android:theme="@style/Theme.ECommerce"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".activities.SelectRolesActivity"
+            android:exported="true" />
+        <activity
             android:name=".activities.client.ClientActivity"
             android:exported="true" />
         <activity
