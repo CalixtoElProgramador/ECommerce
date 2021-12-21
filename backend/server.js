@@ -7,7 +7,7 @@ const cors = require('cors');
 const passport = require('passport');
 const multer = require('multer');
 const serviceAccount = require('./serviceAccountKey.json');
-const admin = require('firebase.admin');
+const admin = require('firebase-admin');
 
 admin.initializeApp({
     credential: admin.credential.cert(serviceAccount)
@@ -44,7 +44,7 @@ app.set('port', port);
 * CALLED THE ROUTES
 */
 
-users(app);
+users(app, upload);
 
 server.listen(3000, '192.168.1.70' || 'localhost', function() {
     console.log('Application of Node.js ' + port + ' Started...')
