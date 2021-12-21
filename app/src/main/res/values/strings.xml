@@ -24,4 +24,7 @@
     <string name="activity_client_title">Client Home</string>
     <string name="logout">Logout</string>
     <string name="select_a_role">Select A Role</string>
+    <string name="cd_image_role_item">The icon of the role</string>
+    <string name="delivery_home">Delivery Home</string>
+    <string name="restaurant_home">Restaurant Home</string>
 </resources>

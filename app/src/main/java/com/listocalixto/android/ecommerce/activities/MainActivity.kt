@@ -1,6 +1,8 @@
 package com.listocalixto.android.ecommerce.activities
 
 import android.content.Intent
+import android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK
+import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -12,6 +14,8 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.gson.Gson
 import com.listocalixto.android.ecommerce.R
 import com.listocalixto.android.ecommerce.activities.client.ClientActivity
+import com.listocalixto.android.ecommerce.activities.delivery.DeliveryHomeActivity
+import com.listocalixto.android.ecommerce.activities.restaurant.RestaurantHomeActivity
 import com.listocalixto.android.ecommerce.models.ResponseHttp
 import com.listocalixto.android.ecommerce.models.User
 import com.listocalixto.android.ecommerce.providers.UsersProvider
@@ -125,9 +129,29 @@ class MainActivity : AppCompatActivity() {
     private fun getUserFromSession() {
         val sharedPref = SharedPref(this)
         if (!sharedPref.getData("user").isNullOrBlank()) {
-            navigateToClientActivity()
+            if (!sharedPref.getData("role").isNullOrBlank()) {
+                when(sharedPref.getData("role")?.replace("\"", "")) {
+                    "RESTAURANT" -> { navigateToRestaurantHomeActivity() }
+                    "DELIVERY" -> { navigateToDeliveryHomeActivity() }
+                    else -> { navigateToClientActivity() }
+                }
+            }
         }
 
+    }
+
+    private fun navigateToDeliveryHomeActivity() {
+        val i = Intent(this, DeliveryHomeActivity::class.java)
+        i.flags = FLAG_ACTIVITY_NEW_TASK or FLAG_ACTIVITY_CLEAR_TASK
+        startActivity(i)
+        finish()
+    }
+
+    private fun navigateToRestaurantHomeActivity() {
+        val i = Intent(this, RestaurantHomeActivity::class.java)
+        i.flags = FLAG_ACTIVITY_NEW_TASK or FLAG_ACTIVITY_CLEAR_TASK
+        startActivity(i)
+        finish()
     }
 
     private fun navigateToRegisterActivity() {
@@ -137,12 +161,14 @@ class MainActivity : AppCompatActivity() {
 
     private fun navigateToClientActivity() {
         val i = Intent(this, ClientActivity::class.java)
+        i.flags = FLAG_ACTIVITY_NEW_TASK or FLAG_ACTIVITY_CLEAR_TASK
         startActivity(i)
         finish()
     }
 
     private fun navigateToSelectRolesActivity() {
         val i = Intent(this, SelectRolesActivity::class.java)
+        i.flags = FLAG_ACTIVITY_NEW_TASK or FLAG_ACTIVITY_CLEAR_TASK
         startActivity(i)
         finish()
     }
