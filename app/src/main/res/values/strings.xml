@@ -31,4 +31,11 @@
     <string name="confirm">Confirm</string>
     <string name="skip_this_step">Skip this step</string>
     <string name="err_missing_image">Choose an image to upload on your profile</string>
+    <string name="home">Home</string>
+    <string name="orders">Orders</string>
+    <string name="profile">Profile</string>
+    <string name="categories">Categories</string>
+    <string name="products">Products</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
