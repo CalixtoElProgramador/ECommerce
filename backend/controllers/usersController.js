@@ -148,6 +148,30 @@ module.exports = {
                 error: error
             });
         }
+    },
+
+    async updateWithoutImage(req, res, next) {
+        try {
+            console.log('User: ', req.body);
+            const user = req.body; // The client send us an user object
+            console.log('User parse with JSON: ', user);
+
+            await User.update(user); // Update the user value in the db.
+
+            return res.status(201).json({
+                success: true,
+                message: 'The user information was updated successfully',
+                data: user
+            });
+        }
+        catch (error) {
+            console.log(`Error: ${error}`);
+            return res.status(501).json({
+                success: false,
+                message: 'An error was happened updating the user values',
+                error: error
+            });
+        }
     }
     
 };

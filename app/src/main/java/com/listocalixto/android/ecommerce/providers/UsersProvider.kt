@@ -36,4 +36,8 @@ class UsersProvider {
 
     }
 
+    fun updateWithoutImage(user: User): Call<ResponseHttp>? {
+        return usersRoutes?.updateWithoutImage(user)
+    }
+
 }

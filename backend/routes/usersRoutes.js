@@ -11,5 +11,6 @@ module.exports = (app, upload) => {
 
     // PUT - UPDATE DATA
     app.put('/api/users/update', upload.array('image', 1), UsersController.update);
+    app.put('/api/users/updateWithoutImage', UsersController.updateWithoutImage);
 
 }

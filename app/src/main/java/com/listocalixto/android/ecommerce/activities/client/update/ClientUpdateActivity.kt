@@ -136,16 +136,6 @@ class ClientUpdateActivity : AppCompatActivity() {
                 )
             }
 
-            imageFile == null || currentUser == null -> {
-                showSnackbar(
-                    layout,
-                    R.string.err_missing_image,
-                    Snackbar.LENGTH_SHORT,
-                    btnUpdate,
-                    true
-                )
-            }
-
             else -> {
                 currentUser?.name = name
                 currentUser?.lastname = lastname
@@ -157,25 +147,65 @@ class ClientUpdateActivity : AppCompatActivity() {
     }
 
     private fun updateUser() {
-        usersProvider.update(imageFile!!, currentUser!!)?.enqueue(object : Callback<ResponseHttp> {
-            override fun onResponse(call: Call<ResponseHttp>, response: Response<ResponseHttp>) {
-                Log.d(TAG, "onResponse: Response - $response")
-                Log.d(TAG, "onResponse: Body - ${response.body()}")
-                saveUserInSession(response.body()?.data.toString())
+        imageFile?.let {
+            usersProvider.update(it, currentUser!!)?.enqueue(object : Callback<ResponseHttp> {
+                override fun onResponse(
+                    call: Call<ResponseHttp>,
+                    response: Response<ResponseHttp>
+                ) {
+                    Log.d(TAG, "onResponse: Response - $response")
+                    Log.d(TAG, "onResponse: Body - ${response.body()}")
+                    saveUserInSession(response.body()?.data.toString())
+                    showMessageUserInfoUpdated()
 
-            }
+                }
 
-            override fun onFailure(call: Call<ResponseHttp>, t: Throwable) {
-                Log.e(TAG, "onFailure: ${t.message}", t)
-                showSnackbar(
-                    layout,
-                    R.string.err_an_error_was_happened,
-                    Snackbar.LENGTH_SHORT,
-                    btnUpdate,
-                    true
-                )
-            }
-        })
+                override fun onFailure(call: Call<ResponseHttp>, t: Throwable) {
+                    Log.e(TAG, "onFailure: ${t.message}", t)
+                    showSnackbar(
+                        layout,
+                        R.string.err_an_error_was_happened,
+                        Snackbar.LENGTH_SHORT,
+                        btnUpdate,
+                        true
+                    )
+                }
+            })
+        } ?: run {
+            usersProvider.updateWithoutImage(currentUser!!)
+                ?.enqueue(object : Callback<ResponseHttp> {
+                    override fun onResponse(
+                        call: Call<ResponseHttp>,
+                        response: Response<ResponseHttp>
+                    ) {
+                        Log.d(TAG, "onResponse: Response - $response")
+                        Log.d(TAG, "onResponse: Body - ${response.body()}")
+                        saveUserInSession(response.body()?.data.toString())
+                        showMessageUserInfoUpdated()
+                    }
+
+                    override fun onFailure(call: Call<ResponseHttp>, t: Throwable) {
+                        Log.e(TAG, "onFailure: ${t.message}", t)
+                        showSnackbar(
+                            layout,
+                            R.string.err_an_error_was_happened,
+                            Snackbar.LENGTH_SHORT,
+                            btnUpdate,
+                            true
+                        )
+                    }
+                })
+        }
+    }
+
+    private fun showMessageUserInfoUpdated() {
+        showSnackbar(
+            layout,
+            R.string.user_info_updated,
+            Snackbar.LENGTH_LONG,
+            btnUpdate,
+            false
+        )
     }
 
     private fun saveUserInSession(data: String) {
