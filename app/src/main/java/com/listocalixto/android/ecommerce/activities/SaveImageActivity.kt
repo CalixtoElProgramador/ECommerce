@@ -26,13 +26,12 @@ import java.io.File
 
 class SaveImageActivity : AppCompatActivity() {
 
-    private val usersProvider = UsersProvider()
-
+    private var usersProvider: UsersProvider? = null
     private var imageFile: File? = null
     private var circleImageUser: CircleImageView? = null
     private var btnSkip: MaterialButton? = null
     private var btnConfirm: MaterialButton? = null
-    private var user: User? = null
+    private var currentUser: User? = null
     private var sharedPref: SharedPref? = null
 
     private lateinit var layout: CoordinatorLayout
@@ -42,6 +41,7 @@ class SaveImageActivity : AppCompatActivity() {
         setContentView(R.layout.activity_save_image)
         initSharedPref()
         getUserFromSession()
+        initUsersProvider()
         setupViews()
 
         circleImageUser?.setOnClickListener { selectImage() }
@@ -50,12 +50,16 @@ class SaveImageActivity : AppCompatActivity() {
 
     }
 
+    private fun initUsersProvider() {
+        usersProvider = UsersProvider(currentUser?.sessionToken)
+    }
+
     private fun initSharedPref() {
         sharedPref = SharedPref(this)
     }
 
     private fun validateImage() {
-        if (imageFile == null || user == null) {
+        if (imageFile == null || currentUser == null) {
             showSnackbar(layout, R.string.err_missing_image, Snackbar.LENGTH_SHORT, btnConfirm, true)
             return
         }
@@ -63,7 +67,7 @@ class SaveImageActivity : AppCompatActivity() {
     }
 
     private fun saveImage() {
-        usersProvider.update(imageFile!!, user!!)?.enqueue(object : Callback<ResponseHttp> {
+        usersProvider?.update(imageFile!!, currentUser!!)?.enqueue(object : Callback<ResponseHttp> {
             override fun onResponse(call: Call<ResponseHttp>, response: Response<ResponseHttp>) {
                 Log.d(TAG, "onResponse: Response - $response")
                 Log.d(TAG, "onResponse: Body - ${response.body()}")
@@ -93,7 +97,7 @@ class SaveImageActivity : AppCompatActivity() {
     private fun getUserFromSession() {
         val gson = Gson()
         if (!sharedPref?.getData("user").isNullOrBlank()) {
-            user = gson.fromJson(sharedPref?.getData("user"), User::class.java)
+            currentUser = gson.fromJson(sharedPref?.getData("user"), User::class.java)
         }
     }
 
