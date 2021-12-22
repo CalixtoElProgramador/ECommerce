@@ -26,8 +26,7 @@ import java.io.File
 
 class ClientUpdateActivity : AppCompatActivity() {
 
-    private val usersProvider = UsersProvider()
-
+    private var usersProvider: UsersProvider? = null
     private var currentUser: User? = null
     private var sharedPref: SharedPref? = null
     private var imageFile: File? = null
@@ -45,12 +44,17 @@ class ClientUpdateActivity : AppCompatActivity() {
         setContentView(R.layout.activity_client_update)
         initSharedPref()
         getUserFromSession()
+        initUsersProvider()
         setupViews()
         setupData()
 
         imgProfilePicture.setOnClickListener { selectImage() }
         btnUpdate.setOnClickListener { validateInputs() }
         btnCancel.setOnClickListener { onBackPressed() }
+    }
+
+    private fun initUsersProvider() {
+        usersProvider = UsersProvider(currentUser?.sessionToken)
     }
 
     private fun selectImage() {
@@ -148,16 +152,25 @@ class ClientUpdateActivity : AppCompatActivity() {
 
     private fun updateUser() {
         imageFile?.let {
-            usersProvider.update(it, currentUser!!)?.enqueue(object : Callback<ResponseHttp> {
+            usersProvider?.update(it, currentUser!!)?.enqueue(object : Callback<ResponseHttp> {
                 override fun onResponse(
                     call: Call<ResponseHttp>,
                     response: Response<ResponseHttp>
                 ) {
                     Log.d(TAG, "onResponse: Response - $response")
                     Log.d(TAG, "onResponse: Body - ${response.body()}")
-                    saveUserInSession(response.body()?.data.toString())
-                    showMessageUserInfoUpdated()
-
+                    if (response.body()?.isSuccess == true) {
+                        saveUserInSession(response.body()?.data.toString())
+                        showMessageUserInfoUpdated()
+                    } else {
+                        showSnackbar(
+                            layout,
+                            R.string.err_missing_permissions,
+                            Snackbar.LENGTH_LONG,
+                            btnUpdate,
+                            true
+                        )
+                    }
                 }
 
                 override fun onFailure(call: Call<ResponseHttp>, t: Throwable) {
@@ -172,7 +185,7 @@ class ClientUpdateActivity : AppCompatActivity() {
                 }
             })
         } ?: run {
-            usersProvider.updateWithoutImage(currentUser!!)
+            usersProvider?.updateWithoutImage(currentUser!!)
                 ?.enqueue(object : Callback<ResponseHttp> {
                     override fun onResponse(
                         call: Call<ResponseHttp>,
@@ -180,8 +193,18 @@ class ClientUpdateActivity : AppCompatActivity() {
                     ) {
                         Log.d(TAG, "onResponse: Response - $response")
                         Log.d(TAG, "onResponse: Body - ${response.body()}")
-                        saveUserInSession(response.body()?.data.toString())
-                        showMessageUserInfoUpdated()
+                        if (response.body()?.isSuccess == true) {
+                            saveUserInSession(response.body()?.data.toString())
+                            showMessageUserInfoUpdated()
+                        } else {
+                            showSnackbar(
+                                layout,
+                                R.string.err_missing_permissions,
+                                Snackbar.LENGTH_LONG,
+                                btnUpdate,
+                                true
+                            )
+                        }
                     }
 
                     override fun onFailure(call: Call<ResponseHttp>, t: Throwable) {

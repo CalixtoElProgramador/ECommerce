@@ -44,4 +44,5 @@
     <string name="activity_client_update_title">Update.</string>
     <string name="activity_client_update_subtitle">Update your information.</string>
     <string name="user_info_updated">User information updated successfully</string>
+    <string name="err_missing_permissions">Permissions are required to perform this action</string>
 </resources>

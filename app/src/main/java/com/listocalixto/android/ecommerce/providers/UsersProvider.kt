@@ -10,13 +10,15 @@ import okhttp3.RequestBody
 import retrofit2.Call
 import java.io.File
 
-class UsersProvider {
+class UsersProvider(private val token: String? = null) {
 
     private var usersRoutes: UsersRoutes? = null
+    private var userRoutesWithToken: UsersRoutes? = null
 
     init {
         val api = ApiRoutes()
         usersRoutes = api.getUsersRoutes()
+        token?.let { userRoutesWithToken = api.getUsersRoutesWithToken(it) }
     }
 
     fun register(user: User): Call<ResponseHttp>? {
@@ -32,12 +34,12 @@ class UsersProvider {
         val image = MultipartBody.Part.createFormData("image", file.name, reqFile)
         val requestBody = RequestBody.create(MediaType.parse("text/plain"), user.toJson())
 
-        return usersRoutes?.update(image, requestBody)
+        return userRoutesWithToken?.update(image, requestBody, token!!)
 
     }
 
     fun updateWithoutImage(user: User): Call<ResponseHttp>? {
-        return usersRoutes?.updateWithoutImage(user)
+        return userRoutesWithToken?.updateWithoutImage(user, token!!)
     }
 
 }
