@@ -15,6 +15,7 @@ import com.google.gson.Gson
 import com.listocalixto.android.ecommerce.R
 import com.listocalixto.android.ecommerce.activities.MainActivity
 import com.listocalixto.android.ecommerce.activities.SelectRolesActivity
+import com.listocalixto.android.ecommerce.activities.client.update.ClientUpdateActivity
 import com.listocalixto.android.ecommerce.models.User
 import com.listocalixto.android.ecommerce.util.SharedPref
 import com.listocalixto.android.ecommerce.util.showSnackbar
@@ -41,9 +42,15 @@ class ClientProfileFragment : Fragment(R.layout.fragment_client_profile) {
         setupViews(view)
         setupData()
 
+        btnEditProfile.setOnClickListener { navigateToClientUpdateActivity() }
         btnSelectRole.setOnClickListener { navigateToSelectRolesActivity() }
         btnLogout.setOnClickListener { logout() }
 
+    }
+
+    private fun navigateToClientUpdateActivity() {
+        val i = Intent(requireActivity(), ClientUpdateActivity::class.java)
+        startActivity(i)
     }
 
     private fun logout() {
