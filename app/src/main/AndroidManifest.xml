@@ -7,7 +7,8 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
         tools:ignore="ScopedStorage" />
 
     <application
@@ -19,13 +20,11 @@
         android:theme="@style/Theme.ECommerce"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".activities.client.update.ClientUpdateActivity"
+            android:exported="true" />
+        <activity
             android:name=".activities.SaveImageActivity"
-            android:exported="true" >
-
-
-
-        </activity>
-
+            android:exported="true"></activity>
         <activity
             android:name=".activities.delivery.DeliveryHomeActivity"
             android:exported="true" />
@@ -44,13 +43,11 @@
         <activity
             android:name=".activities.MainActivity"
             android:exported="true">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
     </application>
 

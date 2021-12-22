@@ -40,4 +40,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="edit_profile">Edit profile</string>
     <string name="cd_image_btn_edit_profile">Edit profile.</string>
+    <string name="update">Update</string>
+    <string name="activity_client_update_title">Update.</string>
+    <string name="activity_client_update_subtitle">Update your information.</string>
 </resources>
