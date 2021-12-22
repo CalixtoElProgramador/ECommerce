@@ -45,4 +45,8 @@
     <string name="activity_client_update_subtitle">Update your information.</string>
     <string name="user_info_updated">User information updated successfully</string>
     <string name="err_missing_permissions">Permissions are required to perform this action</string>
+    <string name="cd_image_category">Image of the category.</string>
+    <string name="category_name">Categories\' name</string>
+    <string name="save_category">Save category</string>
+    <string name="category_created_successfully">The category was created successfully!</string>
 </resources>
