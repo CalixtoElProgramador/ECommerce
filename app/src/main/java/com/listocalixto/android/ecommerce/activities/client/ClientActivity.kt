@@ -59,13 +59,6 @@ class ClientActivity : AppCompatActivity() {
         sharedPref = SharedPref(this)
     }
 
-    private fun logout() {
-        sharedPref?.remove("user")
-        val i = Intent(this, MainActivity::class.java)
-        startActivity(i)
-        finish()
-    }
-
     companion object {
         private const val TAG = "ClientActivity"
     }
