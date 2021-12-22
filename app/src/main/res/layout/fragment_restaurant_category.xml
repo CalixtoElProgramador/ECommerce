@@ -3,8 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#2196F3"
-    tools:context=".fragments.client.ClientOrdersFragment">
+    android:background="#9C27B0"
+    tools:context=".fragments.restaurant.RestaurantCategoryFragment">
 
 
 </FrameLayout>
