@@ -28,4 +28,6 @@ class CategoriesProvider(private val token: String) {
 
     }
 
+    fun getAll(): Call<ArrayList<Category>>? = categoriesRoutes?.getAll(token)
+
 }

@@ -103,6 +103,7 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onFailure(call: Call<ResponseHttp>, t: Throwable) {
+                Log.e(TAG, "onFailure: ${t.message}", t)
                 showSnackbar(
                     view = layout,
                     snackbarText = R.string.err_an_error_was_happened,
