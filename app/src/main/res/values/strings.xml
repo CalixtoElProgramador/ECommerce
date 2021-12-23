@@ -49,4 +49,9 @@
     <string name="category_name">Categories\' name</string>
     <string name="save_category">Save category</string>
     <string name="category_created_successfully">The category was created successfully!</string>
+    <string name="product_name">Product name</string>
+    <string name="product_description">Product description</string>
+    <string name="product_price">Product price</string>
+    <string name="save_product">Save product</string>
+    <string name="err_at_least_one_image_is_required">At least one image is required to upload a product.</string>
 </resources>
