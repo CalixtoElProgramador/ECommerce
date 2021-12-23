@@ -6,10 +6,12 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.EditText
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.widget.Toolbar
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import com.bumptech.glide.Glide
 import com.github.dhaval2404.imagepicker.ImagePicker
 import com.google.android.material.button.MaterialButton
+import com.google.android.material.color.MaterialColors
 import com.google.android.material.snackbar.Snackbar
 import com.google.gson.Gson
 import com.listocalixto.android.ecommerce.R
@@ -37,6 +39,7 @@ class ClientUpdateActivity : AppCompatActivity() {
     private lateinit var inputName: EditText
     private lateinit var inputLastname: EditText
     private lateinit var inputPhone: EditText
+    private lateinit var toolbar: Toolbar
     private lateinit var layout: CoordinatorLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,6 +50,7 @@ class ClientUpdateActivity : AppCompatActivity() {
         initUsersProvider()
         setupViews()
         setupData()
+        setupToolbar()
 
         imgProfilePicture.setOnClickListener { selectImage() }
         btnUpdate.setOnClickListener { validateInputs() }
@@ -111,6 +115,13 @@ class ClientUpdateActivity : AppCompatActivity() {
             btnUpdate,
             true
         )
+    }
+
+    private fun setupToolbar() {
+        toolbar.title = getString(R.string.activity_client_update_title)
+        toolbar.subtitle = getString(R.string.activity_client_update_subtitle)
+        setSupportActionBar(toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
     private fun initSharedPref() {
@@ -244,6 +255,7 @@ class ClientUpdateActivity : AppCompatActivity() {
         inputName = findViewById(R.id.input_updateName)
         inputLastname = findViewById(R.id.input_updateLastname)
         inputPhone = findViewById(R.id.input_updatePhone)
+        toolbar = findViewById(R.id.toolbar)
         layout = findViewById(R.id.clientUpdateActivityLayout)
     }
 

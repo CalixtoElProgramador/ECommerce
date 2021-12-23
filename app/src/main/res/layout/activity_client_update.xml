@@ -7,33 +7,20 @@
     android:layout_height="match_parent"
     tools:context=".activities.client.update.ClientUpdateActivity">
 
+    <include layout="@layout/action_bar" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:padding="16dp">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="48dp"
-            android:text="@string/activity_client_update_title"
-            android:textAppearance="?attr/textAppearanceHeadline3"
-            android:textColor="?attr/colorPrimary" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:text="@string/activity_client_update_subtitle"
-            android:textAppearance="?attr/textAppearanceBody1" />
-
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/img_updateProfilePicture"
             android:layout_width="150dp"
             android:layout_height="150dp"
             android:layout_gravity="center"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="64dp"
             android:src="@drawable/ic_person"
             app:civ_border_color="?attr/colorOnSurface"
             app:civ_border_width="4dp"

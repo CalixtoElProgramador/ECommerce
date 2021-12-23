@@ -5,8 +5,11 @@ import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.View
 import android.widget.FrameLayout
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.color.MaterialColors
 import com.google.android.material.snackbar.Snackbar
 import com.google.gson.Gson
 import com.listocalixto.android.ecommerce.R
@@ -30,6 +33,7 @@ class ClientCategoriesFragment : Fragment(R.layout.fragment_client_categories) {
 
     private lateinit var rvCategories: RecyclerView
     private lateinit var bottomNav: BottomNavigationView
+    private lateinit var toolbar: Toolbar
     private lateinit var layout: FrameLayout
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -39,6 +43,7 @@ class ClientCategoriesFragment : Fragment(R.layout.fragment_client_categories) {
         initCategoriesProvider()
         setupViews(view)
         getCategoriesFromProvider()
+        setupToolbar()
     }
 
     private fun initSharedPref() {
@@ -54,6 +59,18 @@ class ClientCategoriesFragment : Fragment(R.layout.fragment_client_categories) {
 
     private fun initCategoriesProvider() {
         categoriesProvider = CategoriesProvider(currentUser?.sessionToken!!)
+    }
+
+    private fun setupViews(view: View) {
+        bottomNav = activity?.findViewById(R.id.bottomNav_client)!!
+        rvCategories = view.findViewById(R.id.rv_categories)
+        toolbar = view.findViewById(R.id.toolbar)
+        layout = view.findViewById(R.id.clientCategoriesLayout)
+    }
+
+    private fun setupToolbar() {
+        toolbar.title = getString(R.string.categories)
+        (activity as AppCompatActivity).setSupportActionBar(toolbar)
     }
 
     private fun getCategoriesFromProvider() {
@@ -88,12 +105,6 @@ class ClientCategoriesFragment : Fragment(R.layout.fragment_client_categories) {
                 )
             }
         })
-    }
-
-    private fun setupViews(view: View) {
-        bottomNav = activity?.findViewById(R.id.bottomNav_client)!!
-        rvCategories = view.findViewById(R.id.rv_categories)
-        layout = view.findViewById(R.id.clientCategoriesLayout)
     }
 
     companion object {
