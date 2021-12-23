@@ -4,7 +4,7 @@ const passport = require('passport');
 module.exports = (app, upload) => {
 
     // GET
-    // app.get('/api/users/getAll', UsersController.getAll);
+    app.get('/api/categories/getAll', passport.authenticate('jwt', {session: false}), CategoriesController.getAll);
     
     // POST - SAVE DATA
     app.post('/api/categories/create', passport.authenticate('jwt', {session: false}), upload.array('image', 1), CategoriesController.create);
