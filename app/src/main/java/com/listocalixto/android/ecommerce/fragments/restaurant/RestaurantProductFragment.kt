@@ -13,11 +13,12 @@ import com.google.android.material.button.MaterialButton
 import com.google.android.material.snackbar.Snackbar
 import com.google.gson.Gson
 import com.listocalixto.android.ecommerce.R
-import com.listocalixto.android.ecommerce.adapters.CategoriesAdapter
-import com.listocalixto.android.ecommerce.fragments.client.ClientCategoriesFragment
 import com.listocalixto.android.ecommerce.models.Category
+import com.listocalixto.android.ecommerce.models.Product
+import com.listocalixto.android.ecommerce.models.ResponseHttp
 import com.listocalixto.android.ecommerce.models.User
 import com.listocalixto.android.ecommerce.providers.CategoriesProvider
+import com.listocalixto.android.ecommerce.providers.ProductsProvider
 import com.listocalixto.android.ecommerce.util.SharedPref
 import com.listocalixto.android.ecommerce.util.showSnackbar
 import retrofit2.Call
@@ -28,6 +29,7 @@ import java.io.File
 class RestaurantProductFragment : Fragment(R.layout.fragment_restaurant_product) {
 
     private var categoriesProvider: CategoriesProvider? = null
+    private var productsProvider: ProductsProvider? = null
     private var currentUser: User? = null
     private var sharedPref: SharedPref? = null
     private var imgFile00: File? = null
@@ -49,7 +51,7 @@ class RestaurantProductFragment : Fragment(R.layout.fragment_restaurant_product)
         super.onViewCreated(view, savedInstanceState)
         initSharedPref()
         getUserFromSession()
-        initCategoriesProvider()
+        initProviders()
         setupViews(view)
         getCategoriesFromProvider()
 
@@ -71,8 +73,9 @@ class RestaurantProductFragment : Fragment(R.layout.fragment_restaurant_product)
         }
     }
 
-    private fun initCategoriesProvider() {
+    private fun initProviders() {
         categoriesProvider = CategoriesProvider(currentUser?.sessionToken!!)
+        productsProvider = ProductsProvider(currentUser?.sessionToken!!)
     }
 
     private fun getCategoriesFromProvider() {
@@ -87,7 +90,12 @@ class RestaurantProductFragment : Fragment(R.layout.fragment_restaurant_product)
                     spinnerCategories.adapter = arrayAdapter
                     spinnerCategories.onItemSelectedListener =
                         object : AdapterView.OnItemSelectedListener {
-                            override fun onItemSelected(adapterView: AdapterView<*>?, view: View?, position: Int, l: Long) {
+                            override fun onItemSelected(
+                                adapterView: AdapterView<*>?,
+                                view: View?,
+                                position: Int,
+                                l: Long
+                            ) {
                                 idCategory = it[position].id.toString()
                                 Log.d(TAG, "onItemSelected: $idCategory")
                             }
@@ -124,6 +132,9 @@ class RestaurantProductFragment : Fragment(R.layout.fragment_restaurant_product)
         val name = inputName.text.toString()
         val description = inputDescription.text.toString()
         val priceText = inputPrice.text.toString()
+        val file00 = imgFile00
+        val file01 = imgFile01
+        val file02 = imgFile02
 
         when {
             name.isEmpty() || description.isEmpty() || priceText.isEmpty() -> {
@@ -135,7 +146,7 @@ class RestaurantProductFragment : Fragment(R.layout.fragment_restaurant_product)
                     true
                 )
             }
-            imgFile00 == null && imgFile01 == null && imgFile02 == null -> {
+            file00 == null || file01 == null || file02 == null -> {
                 showSnackbar(
                     layout,
                     R.string.err_at_least_one_image_is_required,
@@ -146,27 +157,65 @@ class RestaurantProductFragment : Fragment(R.layout.fragment_restaurant_product)
             }
 
             else -> {
-                saveProduct(/*name, description, priceText*/)
+                val files = arrayListOf(file00, file01, file02)
+                val product = Product(
+                    name = name,
+                    description = description,
+                    price = priceText.toDouble(),
+                    idCategory = idCategory
+                )
+                saveProduct(product, files)
             }
 
         }
 
     }
 
-    private fun saveProduct(/*name: String, description: String, priceText: String*/) {
-        /*
-        val file00 = imgFile00
-        val file01 = imgFile01
-        val file02 = imgFile02
-        */
+    private fun saveProduct(product: Product, files: ArrayList<File>) {
+        productsProvider?.create(files, product)?.enqueue(object : Callback<ResponseHttp> {
+            override fun onResponse(call: Call<ResponseHttp>, response: Response<ResponseHttp>) {
+                Log.d(TAG, "onResponse: $response")
+                Log.d(TAG, "onResponse: Body - ${response.body()}")
+                response.body()?.let {
+                    if (it.isSuccess) {
+                        showSnackbar(
+                            layout,
+                            R.string.product_was_created_successfully,
+                            Snackbar.LENGTH_SHORT,
+                            btnSave,
+                            false
+                        )
+                    } else {
+                        showSnackbar(
+                            layout,
+                            R.string.err_missing_permissions,
+                            Snackbar.LENGTH_LONG,
+                            btnSave,
+                            true
+                        )
+                    }
+                } ?: run {
+                    showSnackbar(
+                        layout,
+                        R.string.err_an_error_was_happened,
+                        Snackbar.LENGTH_LONG,
+                        btnSave,
+                        true
+                    )
+                }
+            }
 
-        showSnackbar(
-            layout,
-            R.string.app_name,
-            Snackbar.LENGTH_SHORT,
-            btnSave,
-            false
-        )
+            override fun onFailure(call: Call<ResponseHttp>, t: Throwable) {
+                Log.e(TAG, "onFailure: ${t.message}", t)
+                showSnackbar(
+                    layout,
+                    R.string.err_an_error_was_happened,
+                    Snackbar.LENGTH_SHORT,
+                    btnSave,
+                    true
+                )
+            }
+        })
     }
 
     private fun setupViews(view: View) {

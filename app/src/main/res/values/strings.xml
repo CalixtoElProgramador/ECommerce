@@ -53,5 +53,6 @@
     <string name="product_description">Product description</string>
     <string name="product_price">Product price</string>
     <string name="save_product">Save product</string>
-    <string name="err_at_least_one_image_is_required">At least one image is required to upload a product.</string>
+    <string name="err_at_least_one_image_is_required">It\'s necessary to load three images to save a product</string>
+    <string name="product_was_created_successfully">Product was created successfully</string>
 </resources>

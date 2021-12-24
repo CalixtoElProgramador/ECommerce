@@ -1,6 +1,7 @@
 package com.listocalixto.android.ecommerce.api
 
 import com.listocalixto.android.ecommerce.routes.CategoriesRoutes
+import com.listocalixto.android.ecommerce.routes.ProductsRoutes
 import com.listocalixto.android.ecommerce.routes.UsersRoutes
 
 class ApiRoutes {
@@ -18,6 +19,10 @@ class ApiRoutes {
 
     fun getCategoriesRoutes(token: String): CategoriesRoutes {
         return retrofit.getClientWithToken(API_URL, token).create(CategoriesRoutes::class.java)
+    }
+
+    fun getProductsRoutes(token: String): ProductsRoutes {
+        return retrofit.getClientWithToken(API_URL, token).create(ProductsRoutes::class.java)
     }
 
 }
