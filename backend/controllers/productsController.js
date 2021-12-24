@@ -8,11 +8,7 @@ module.exports = {
         try {
             const id_category = req.params.id_category;
             const data = await Product.findByCategory(id_category);
-            return res.status(201).json({
-                success: true,
-                message: `The quantity of products with category ${id_category} is: ${data.length}`,
-                data: data
-            });
+            return res.status(201).json(data);
         } catch (error) {
             console.log(`Error: ${error}`);
                 res.status(501).json({

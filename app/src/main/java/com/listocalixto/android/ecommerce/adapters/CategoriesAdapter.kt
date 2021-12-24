@@ -10,11 +10,8 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.listocalixto.android.ecommerce.R
-import com.listocalixto.android.ecommerce.activities.client.ClientActivity
-import com.listocalixto.android.ecommerce.activities.delivery.DeliveryHomeActivity
-import com.listocalixto.android.ecommerce.activities.restaurant.RestaurantHomeActivity
+import com.listocalixto.android.ecommerce.activities.client.products.ClientProductsListActivity
 import com.listocalixto.android.ecommerce.models.Category
-import com.listocalixto.android.ecommerce.models.Role
 import com.listocalixto.android.ecommerce.util.SharedPref
 
 class CategoriesAdapter(private val categories: ArrayList<Category>, private val activity: Activity) :
@@ -36,7 +33,13 @@ class CategoriesAdapter(private val categories: ArrayList<Category>, private val
         val category = categories[position]
         holder.categoryName.text = category.name
         Glide.with(activity).load(category.image).into(holder.imgCategory)
+        holder.itemView.setOnClickListener { navigateToProductsListActivity(category) }
+    }
 
+    private fun navigateToProductsListActivity(category: Category) {
+        val i = Intent(activity, ClientProductsListActivity::class.java)
+        i.putExtra("idCategory", category.id)
+        activity.startActivity(i)
     }
 
     class CategoriesViewHolder(view: View) : RecyclerView.ViewHolder(view) {

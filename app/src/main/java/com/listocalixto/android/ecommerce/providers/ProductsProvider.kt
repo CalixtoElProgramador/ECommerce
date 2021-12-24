@@ -21,6 +21,10 @@ class ProductsProvider(private val token: String) {
         productsRoutes = api.getProductsRoutes(token)
     }
 
+    fun findByCategory(idCategory: String): Call<ArrayList<Product>>? {
+        return productsRoutes?.findByCategory(idCategory, token)
+    }
+
     fun create(files: List<File>, product: Product): Call<ResponseHttp>? {
         val images = arrayOfNulls<MultipartBody.Part>(files.size)
         for (i in files.indices) {
