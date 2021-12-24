@@ -5,7 +5,7 @@
     android:id="@+id/clientProductsListLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.client.products.ClientProductsListActivity">
+    tools:context=".activities.client.products.list.ClientProductsListActivity">
 
     <include
         layout="@layout/action_bar"

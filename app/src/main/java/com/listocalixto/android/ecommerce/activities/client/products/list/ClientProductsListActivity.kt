@@ -1,4 +1,4 @@
-package com.listocalixto.android.ecommerce.activities.client.products
+package com.listocalixto.android.ecommerce.activities.client.products.list
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

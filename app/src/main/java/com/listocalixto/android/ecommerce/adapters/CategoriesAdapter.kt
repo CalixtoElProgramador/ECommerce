@@ -10,7 +10,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.listocalixto.android.ecommerce.R
-import com.listocalixto.android.ecommerce.activities.client.products.ClientProductsListActivity
+import com.listocalixto.android.ecommerce.activities.client.products.list.ClientProductsListActivity
 import com.listocalixto.android.ecommerce.models.Category
 import com.listocalixto.android.ecommerce.util.SharedPref
 

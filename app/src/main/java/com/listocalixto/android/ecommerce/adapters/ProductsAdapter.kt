@@ -2,6 +2,7 @@ package com.listocalixto.android.ecommerce.adapters
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,7 +10,9 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.google.gson.Gson
 import com.listocalixto.android.ecommerce.R
+import com.listocalixto.android.ecommerce.activities.client.products.details.ClientProductsDetailsActivity
 import com.listocalixto.android.ecommerce.models.Product
 import com.listocalixto.android.ecommerce.util.SharedPref
 
@@ -35,6 +38,14 @@ class ProductsAdapter(private val products: ArrayList<Product>, private val acti
         holder.nameProduct.text = product.name
         holder.priceProduct.text = "$ ${product.price}"
 
+        holder.itemView.setOnClickListener { navigateToProductDetailsActivity(product) }
+    }
+
+    private fun navigateToProductDetailsActivity(product: Product) {
+        val gson = Gson()
+        val i = Intent(activity, ClientProductsDetailsActivity::class.java)
+        i.putExtra("product", product.toJson())
+        activity.startActivity(i)
     }
 
     class ProductsViewHolder(view: View) : RecyclerView.ViewHolder(view) {
