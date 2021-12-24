@@ -1,4 +1,3 @@
-const { getAll } = require('../models/category');
 const Category = require('../models/category');
 const storage = require('../utils/cloud_storage');
 
