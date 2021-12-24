@@ -59,4 +59,6 @@
     <string name="cd_image_add_product">Add product to my shop list.</string>
     <string name="cd_image_remove_product">Remove product from my shop list.</string>
     <string name="add_product">Add product</string>
+    <string name="product_added">Product added.</string>
+    <string name="description">Description</string>
 </resources>
