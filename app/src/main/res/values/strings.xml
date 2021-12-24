@@ -55,4 +55,8 @@
     <string name="save_product">Save product</string>
     <string name="err_at_least_one_image_is_required">It\'s necessary to load three images to save a product</string>
     <string name="product_was_created_successfully">Product was created successfully</string>
+    <string name="large_text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus sit amet mi laoreet, volutpat urna sit amet, efficitur ex. In convallis sit amet lectus eu fermentum. Etiam rutrum, odio ut sodales congue, massa enim euismod libero, et varius massa dui ut nunc. Aliquam erat volutpat. Vivamus ultricies nulla nec erat sodales, at suscipit odio euismod. Integer lacinia eu quam ac aliquet.</string>
+    <string name="cd_image_add_product">Add product to my shop list.</string>
+    <string name="cd_image_remove_product">Remove product from my shop list.</string>
+    <string name="add_product">Add product</string>
 </resources>
