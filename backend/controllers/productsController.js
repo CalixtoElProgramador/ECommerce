@@ -4,6 +4,25 @@ const asyncForEach = require('../utils/async_foreach');
 
 module.exports = {
 
+    async findByCategory(req, res, next) {
+        try {
+            const id_category = req.params.id_category;
+            const data = await Product.findByCategory(id_category);
+            return res.status(201).json({
+                success: true,
+                message: `The quantity of products with category ${id_category} is: ${data.length}`,
+                data: data
+            });
+        } catch (error) {
+            console.log(`Error: ${error}`);
+                res.status(501).json({
+                    success: false,
+                    message: `Error when registering the product. ${error}`,
+                    error: error
+                });
+        }
+    },
+
     async create(req, res, next) {
 
         let product = JSON.parse(req.body.product);
