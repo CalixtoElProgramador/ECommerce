@@ -21,6 +21,7 @@ import com.listocalixto.android.ecommerce.providers.CategoriesProvider
 import com.listocalixto.android.ecommerce.providers.ProductsProvider
 import com.listocalixto.android.ecommerce.util.SharedPref
 import com.listocalixto.android.ecommerce.util.showSnackbar
+import com.tommasoberlose.progressdialog.ProgressDialogFragment
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -172,12 +173,15 @@ class RestaurantProductFragment : Fragment(R.layout.fragment_restaurant_product)
     }
 
     private fun saveProduct(product: Product, files: ArrayList<File>) {
+        ProgressDialogFragment.showProgressBar(requireActivity())
         productsProvider?.create(files, product)?.enqueue(object : Callback<ResponseHttp> {
             override fun onResponse(call: Call<ResponseHttp>, response: Response<ResponseHttp>) {
+                ProgressDialogFragment.hideProgressBar(requireActivity())
                 Log.d(TAG, "onResponse: $response")
                 Log.d(TAG, "onResponse: Body - ${response.body()}")
                 response.body()?.let {
                     if (it.isSuccess) {
+                        resetForm()
                         showSnackbar(
                             layout,
                             R.string.product_was_created_successfully,
@@ -206,6 +210,7 @@ class RestaurantProductFragment : Fragment(R.layout.fragment_restaurant_product)
             }
 
             override fun onFailure(call: Call<ResponseHttp>, t: Throwable) {
+                ProgressDialogFragment.hideProgressBar(requireActivity())
                 Log.e(TAG, "onFailure: ${t.message}", t)
                 showSnackbar(
                     layout,
@@ -216,6 +221,18 @@ class RestaurantProductFragment : Fragment(R.layout.fragment_restaurant_product)
                 )
             }
         })
+    }
+
+    private fun resetForm() {
+        inputName.setText("")
+        inputDescription.setText("")
+        inputPrice.setText("")
+        imgFile00 = null
+        imgFile01 = null
+        imgFile02 = null
+        img00.setImageResource(R.drawable.ic_image)
+        img01.setImageResource(R.drawable.ic_image)
+        img02.setImageResource(R.drawable.ic_image)
     }
 
     private fun setupViews(view: View) {
