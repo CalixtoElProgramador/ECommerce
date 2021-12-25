@@ -42,7 +42,6 @@ class ProductsAdapter(private val products: ArrayList<Product>, private val acti
     }
 
     private fun navigateToProductDetailsActivity(product: Product) {
-        val gson = Gson()
         val i = Intent(activity, ClientProductsDetailsActivity::class.java)
         i.putExtra("product", product.toJson())
         activity.startActivity(i)
