@@ -61,4 +61,9 @@
     <string name="add_product">Add product</string>
     <string name="product_added">Product added.</string>
     <string name="description">Description</string>
+    <string name="cd_image_delete_shop">Delete this shop.</string>
+    <string name="cd_image_shop">Shop image.</string>
+    <string name="next">Next</string>
+    <string name="total">Total:</string>
+    <string name="your_shopping_list">Your shopping list</string>
 </resources>
