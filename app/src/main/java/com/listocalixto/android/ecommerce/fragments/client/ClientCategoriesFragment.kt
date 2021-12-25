@@ -1,7 +1,11 @@
 package com.listocalixto.android.ecommerce.fragments.client
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import androidx.fragment.app.Fragment
 import android.view.View
 import android.widget.FrameLayout
@@ -9,10 +13,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.android.material.color.MaterialColors
 import com.google.android.material.snackbar.Snackbar
 import com.google.gson.Gson
 import com.listocalixto.android.ecommerce.R
+import com.listocalixto.android.ecommerce.activities.client.shopping_bag.ClientShoppingBagActivity
 import com.listocalixto.android.ecommerce.adapters.CategoriesAdapter
 import com.listocalixto.android.ecommerce.models.Category
 import com.listocalixto.android.ecommerce.models.User
@@ -38,6 +42,7 @@ class ClientCategoriesFragment : Fragment(R.layout.fragment_client_categories) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setHasOptionsMenu(true)
         initSharedPref()
         getUserFromSession()
         initCategoriesProvider()
@@ -105,6 +110,26 @@ class ClientCategoriesFragment : Fragment(R.layout.fragment_client_categories) {
                 )
             }
         })
+    }
+
+    private fun navigateToShoppingBag() {
+        val i = Intent(requireContext(), ClientShoppingBagActivity::class.java)
+        activity?.startActivity(i)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_shopping_bag, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId) {
+            R.id.item_shopping_bag -> { navigateToShoppingBag() }
+            else -> {}
+        }
+
+        return super.onOptionsItemSelected(item)
+
     }
 
     companion object {

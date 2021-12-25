@@ -8,6 +8,7 @@
         <entry key="..\:/Users/calix/Documents/-/Android/ECommerce/app/src/main/res/layout/activity_client.xml" value="0.19166666666666668" />
         <entry key="..\:/Users/calix/Documents/-/Android/ECommerce/app/src/main/res/layout/activity_client_products_details.xml" value="0.2234375" />
         <entry key="..\:/Users/calix/Documents/-/Android/ECommerce/app/src/main/res/layout/activity_client_products_list.xml" value="0.2234375" />
+        <entry key="..\:/Users/calix/Documents/-/Android/ECommerce/app/src/main/res/layout/activity_client_shopping_bag.xml" value="0.2234375" />
         <entry key="..\:/Users/calix/Documents/-/Android/ECommerce/app/src/main/res/layout/activity_client_update.xml" value="0.20462962962962963" />
         <entry key="..\:/Users/calix/Documents/-/Android/ECommerce/app/src/main/res/layout/activity_delivery_home.xml" value="0.20185185185185187" />
         <entry key="..\:/Users/calix/Documents/-/Android/ECommerce/app/src/main/res/layout/activity_main.xml" value="0.19444444444444445" />
@@ -28,6 +29,7 @@
         <entry key="..\:/Users/calix/Documents/-/Android/ECommerce/app/src/main/res/menu/bottom_nav_menu_client.xml" value="0.2234375" />
         <entry key="..\:/Users/calix/Documents/-/Android/ECommerce/app/src/main/res/menu/bottom_nav_menu_delivery.xml" value="0.2234375" />
         <entry key="..\:/Users/calix/Documents/-/Android/ECommerce/app/src/main/res/menu/bottom_nav_menu_restaurant.xml" value="0.2234375" />
+        <entry key="..\:/Users/calix/Documents/-/Android/ECommerce/app/src/main/res/menu/menu_shopping_bag.xml" value="0.22" />
       </map>
     </option>
   </component>
