@@ -42,4 +42,4 @@ An application that I am following through a Udemy course. The application, as i
 Project is: _in progress_
 <br />
 <br />
-As I mentioned before, it is a project that right now I am replicating from a course in order to have experience and be able to do more complex personal projects. So far, I have only developed 20%, which is the registration and authentication of users through the mobile application via the API Rest in Node.js. There are still many things to add, but with time I will implement them. 
+As I mentioned before, it is a project that right now I am replicating from a course in order to have experience and be able to do more complex personal projects. So far, I have only developed 50%, which is the registration and authentication of users through the mobile application via the API Rest in Node.js. There are still many things to add, but with time I will implement them. 
