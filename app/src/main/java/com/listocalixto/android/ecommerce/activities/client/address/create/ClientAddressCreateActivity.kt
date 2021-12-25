@@ -1,5 +1,6 @@
 package com.listocalixto.android.ecommerce.activities.client.address.create
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.appcompat.widget.Toolbar
@@ -8,6 +9,7 @@ import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.listocalixto.android.ecommerce.R
+import com.listocalixto.android.ecommerce.activities.client.address.map.ClientAddressMapActivity
 
 class ClientAddressCreateActivity : AppCompatActivity() {
 
@@ -26,6 +28,14 @@ class ClientAddressCreateActivity : AppCompatActivity() {
         setContentView(R.layout.activity_client_address_create)
         setupViews()
         setupToolbar()
+
+        inputReferencePoint.setOnClickListener { navigateToClientAddressMapActivity() }
+
+    }
+
+    private fun navigateToClientAddressMapActivity() {
+        val i = Intent(this, ClientAddressMapActivity::class.java)
+        startActivity(i)
     }
 
     private fun setupViews() {

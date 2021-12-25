@@ -76,4 +76,5 @@
     <string name="address_list_activity_title">Your addresses</string>
     <string name="address_list_activity_subtitle">Choose where do you want receive your shopping.</string>
     <string name="address_create_activity_title">Create</string>
+    <string name="address_map_activity_title">Search a location.</string>
 </resources>
