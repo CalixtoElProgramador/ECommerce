@@ -1,5 +1,6 @@
 package com.listocalixto.android.ecommerce.activities.client.shopping_bag
 
+import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.TextView
@@ -62,6 +63,13 @@ class ClientShoppingBagActivity : AppCompatActivity() {
 
     private fun setupToolbar() {
         toolbar.title = getString(R.string.your_shopping_list)
+        setSupportActionBar(toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+    }
+
+    @SuppressLint("SetTextI18n")
+    fun setTotal(total: Double) {
+        textPriceTotal.text = "$ $total"
     }
 
 }
