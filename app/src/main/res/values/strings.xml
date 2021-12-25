@@ -66,4 +66,14 @@
     <string name="next">Next</string>
     <string name="total">Total:</string>
     <string name="your_shopping_list">Your shopping list</string>
+    <string name="activity_client_address_create_title">Create a new address</string>
+    <string name="activity_client_address_create_subtitle">Complete the form to add a new direction in your profile</string>
+    <string name="direction">Direction</string>
+    <string name="neighborhood">Neighborhood</string>
+    <string name="point_reference">Point reference</string>
+    <string name="create_address">Create address</string>
+    <string name="add_a_new_address">Add a new address</string>
+    <string name="address_list_activity_title">Your addresses</string>
+    <string name="address_list_activity_subtitle">Choose where do you want receive your shopping.</string>
+    <string name="address_create_activity_title">Create</string>
 </resources>

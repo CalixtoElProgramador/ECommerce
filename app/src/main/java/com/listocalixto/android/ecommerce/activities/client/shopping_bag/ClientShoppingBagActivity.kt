@@ -1,6 +1,7 @@
 package com.listocalixto.android.ecommerce.activities.client.shopping_bag
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.TextView
@@ -10,6 +11,7 @@ import com.google.android.material.button.MaterialButton
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.listocalixto.android.ecommerce.R
+import com.listocalixto.android.ecommerce.activities.client.address.list.ClientAddressListActivity
 import com.listocalixto.android.ecommerce.adapters.ShoppingBagAdapter
 import com.listocalixto.android.ecommerce.models.Product
 import com.listocalixto.android.ecommerce.util.SharedPref
@@ -36,6 +38,13 @@ class ClientShoppingBagActivity : AppCompatActivity() {
         setupRecyclerView()
         setupToolbar()
 
+        btnNext.setOnClickListener { navigateToClientAddressListActivity() }
+
+    }
+
+    private fun navigateToClientAddressListActivity() {
+        val i = Intent(this, ClientAddressListActivity::class.java)
+        startActivity(i)
     }
 
     private fun initSharedPref() {

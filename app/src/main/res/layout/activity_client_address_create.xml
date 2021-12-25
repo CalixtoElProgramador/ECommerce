@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:id="@+id/addressCreateLayout"
+    android:layout_height="match_parent"
+    tools:context=".activities.client.address.create.ClientAddressCreateActivity">
+
+    <include
+        android:id="@+id/action_bar"
+        layout="@layout/action_bar"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:text="@string/activity_client_address_create_title"
+        android:textAppearance="?attr/textAppearanceHeadline3"
+        android:textColor="?attr/colorPrimary"
+        app:layout_constraintTop_toBottomOf="@id/action_bar" />
+
+    <TextView
+        android:id="@+id/subtitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="@string/activity_client_address_create_subtitle"
+        android:textAppearance="?attr/textAppearanceSubtitle2"
+        app:layout_constraintEnd_toEndOf="@id/title"
+        app:layout_constraintStart_toStartOf="@id/title"
+        app:layout_constraintTop_toBottomOf="@id/title" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/inputLayout_createDirection"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:hint="@string/direction"
+        app:layout_constraintEnd_toEndOf="@id/subtitle"
+        app:layout_constraintStart_toStartOf="@id/subtitle"
+        app:layout_constraintTop_toBottomOf="@id/subtitle">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/input_createDirection"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:autofillHints="postalAddress"
+            android:inputType="textPostalAddress" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/inputLayout_createNeighborhood"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:hint="@string/neighborhood"
+        app:layout_constraintEnd_toEndOf="@id/subtitle"
+        app:layout_constraintStart_toStartOf="@id/subtitle"
+        app:layout_constraintTop_toBottomOf="@id/inputLayout_createDirection">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/input_createNeighborhood"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:autofillHints="postalAddress"
+            android:inputType="textPostalAddress" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/inputLayout_createReferencePoint"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:hint="@string/point_reference"
+        app:layout_constraintEnd_toEndOf="@id/subtitle"
+        app:layout_constraintStart_toStartOf="@id/subtitle"
+        app:layout_constraintTop_toBottomOf="@id/inputLayout_createNeighborhood">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/input_createReferencePoint"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:autofillHints="postalAddress"
+            android:inputType="textPostalAddress" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_createThisAddress"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:text="@string/create_address"
+        app:cornerRadius="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/inputLayout_createReferencePoint"
+        app:layout_constraintStart_toStartOf="@id/inputLayout_createReferencePoint" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

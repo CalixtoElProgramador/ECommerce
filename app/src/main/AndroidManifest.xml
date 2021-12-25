@@ -20,9 +20,17 @@
         android:theme="@style/Theme.ECommerce"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".activities.client.address.create.ClientAddressCreateActivity"
+            android:exported="true"
+            android:parentActivityName=".activities.client.address.list.ClientAddressListActivity"/>
+        <activity
+            android:name=".activities.client.address.list.ClientAddressListActivity"
+            android:exported="true"
+            android:parentActivityName=".activities.client.shopping_bag.ClientShoppingBagActivity"/>
+        <activity
             android:name=".activities.client.shopping_bag.ClientShoppingBagActivity"
             android:exported="true"
-            android:parentActivityName=".activities.client.ClientActivity"/>
+            android:parentActivityName=".activities.client.ClientActivity" />
         <activity
             android:name=".activities.client.products.details.ClientProductsDetailsActivity"
             android:exported="true" />
