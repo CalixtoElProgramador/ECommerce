@@ -85,4 +85,5 @@
     <string name="address_was_created_successfully">Address was created successfully</string>
     <string name="err_internet_connection">Verify your internet connection and try again</string>
     <string name="cd_image_check_address_item">Send to this address.</string>
+    <string name="select_an_address_to_continue">Select an address to continue</string>
 </resources>

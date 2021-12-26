@@ -21,6 +21,7 @@
         app:layout_constraintBottom_toBottomOf="@id/neighborhoodAddressItem"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/directionAddressItem"
+        app:tint="?attr/colorPrimary"
         tools:visibility="visible" />
 
     <TextView

@@ -4,6 +4,8 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.widget.ImageView
 import androidx.appcompat.widget.Toolbar
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
@@ -12,6 +14,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.gson.Gson
 import com.listocalixto.android.ecommerce.R
 import com.listocalixto.android.ecommerce.activities.client.address.create.ClientAddressCreateActivity
+import com.listocalixto.android.ecommerce.activities.client.payments.form.ClientPaymentFormActivity
 import com.listocalixto.android.ecommerce.adapters.AddressAdapter
 import com.listocalixto.android.ecommerce.models.Address
 import com.listocalixto.android.ecommerce.models.User
@@ -44,7 +47,38 @@ class ClientAddressListActivity : AppCompatActivity() {
         getAddressesFromProvider()
         setupToolbar()
 
+        btnNext.setOnClickListener { getAddressFromSession() }
         btnCreateAnAddress.setOnClickListener { navigateToClientAddressCreateActivity() }
+    }
+
+    private fun getAddressFromSession() {
+        if (!sharedPref?.getData("address").isNullOrEmpty()) {
+            navigateToClientPaymentFormActivity()
+        } else {
+            showSnackbar(
+                layout,
+                R.string.select_an_address_to_continue,
+                Snackbar.LENGTH_SHORT,
+                btnNext,
+                false
+            )
+        }
+    }
+
+    private fun navigateToClientPaymentFormActivity() {
+        val i = Intent(this, ClientPaymentFormActivity::class.java)
+        startActivity(i)
+    }
+
+    /**
+     * This method is to obtain a address in the RecyclerView [rvAddress].
+     */
+
+    fun resetValue(position: Int) {
+        val viewHolder = rvAddress.findViewHolderForAdapterPosition(position)
+        val view = viewHolder?.itemView
+        val imgViewCheck = view?.findViewById<ImageView>(R.id.img_checkAddressItem)
+        imgViewCheck?.visibility = View.INVISIBLE
     }
 
     private fun getAddressesFromProvider() {
