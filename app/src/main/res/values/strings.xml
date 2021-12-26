@@ -84,4 +84,5 @@
     <string name="err_coordinates_invalids">The coordinates are invalids.</string>
     <string name="address_was_created_successfully">Address was created successfully</string>
     <string name="err_internet_connection">Verify your internet connection and try again</string>
+    <string name="cd_image_check_address_item">Send to this address.</string>
 </resources>

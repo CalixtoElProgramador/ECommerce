@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/clientAddressListLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activities.client.address.list.ClientAddressListActivity">
@@ -18,8 +19,8 @@
         android:clipToPadding="false"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toTopOf="@id/divider"
-        tools:listitem="@layout/cardview_shopping_bag"
-        app:layout_constraintTop_toBottomOf="@id/action_bar" />
+        app:layout_constraintTop_toBottomOf="@id/action_bar"
+        tools:listitem="@layout/cardview_address" />
 
     <com.google.android.material.divider.MaterialDivider
         android:id="@+id/divider"
