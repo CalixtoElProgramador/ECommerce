@@ -3,6 +3,25 @@ const OrderHasProducts = require('../models/order_has_prodcuts');
 
 module.exports = {
 
+    async findByStatus(req, res, next) {
+        try {
+
+            const status = req.params.status;
+            const data = await Order.findByStatus(status);
+            return res.status(201).json(data);
+
+        } catch (error) {
+
+            console.log(`Error: ${error}`);
+            return res.status(501).json({
+                success: false,
+                message: 'An error was happened at obtain the orders by status',
+                error: error
+            });
+
+        }
+    },
+
     async create(req, res, next) {
         try {
 
@@ -27,12 +46,14 @@ module.exports = {
             });
 
         } catch (error) {
+
             console.log(`Error: ${error}`);
             return res.status(501).json({
                 success: false,
                 message: 'An error was happened at create the order',
                 error: error
             });
+
         }
     }
 
