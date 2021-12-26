@@ -1,60 +1,106 @@
 package com.listocalixto.android.ecommerce.fragments.client
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
+import android.widget.FrameLayout
+import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.snackbar.Snackbar
+import com.google.gson.Gson
 import com.listocalixto.android.ecommerce.R
+import com.listocalixto.android.ecommerce.adapters.OrdersClientAdapter
+import com.listocalixto.android.ecommerce.models.Order
+import com.listocalixto.android.ecommerce.models.User
+import com.listocalixto.android.ecommerce.providers.OrdersProvider
+import com.listocalixto.android.ecommerce.util.SharedPref
+import com.listocalixto.android.ecommerce.util.showSnackbar
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+class ClientOrdersStatusFragment : Fragment(R.layout.fragment_client_orders_status) {
 
-/**
- * A simple [Fragment] subclass.
- * Use the [ClientOrdersStatusFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-class ClientOrdersStatusFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+    private var status = "PAID"
+    private var currentUser: User? = null
+    private var ordersProvider: OrdersProvider? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+    private lateinit var sharedPref: SharedPref
+
+    private lateinit var layout: FrameLayout
+    private lateinit var bottomNav: BottomNavigationView
+    private lateinit var rvOrders: RecyclerView
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        arguments?.getString("status")?.let {
+            status = it
+        }
+        initSharedPref()
+        getUserFromSession()
+        initOrdersProvider()
+        setupViews(view)
+        getOrders(status)
+    }
+
+    private fun getOrders(status: String) {
+        ordersProvider?.getOrdersByStatus(status)?.enqueue(object : Callback<ArrayList<Order>> {
+            override fun onResponse(
+                call: Call<ArrayList<Order>>,
+                response: Response<ArrayList<Order>>
+            ) {
+                Log.d(TAG, "onResponse: $response")
+                Log.d(TAG, "onResponse: Body - ${response.body()}")
+                response.body()?.let {
+                    rvOrders.adapter = OrdersClientAdapter(it, requireActivity())
+                } ?: run {
+                    showSnackbar(
+                        layout,
+                        R.string.err_internet_connection,
+                        Snackbar.LENGTH_LONG,
+                        bottomNav,
+                        true
+                    )
+                }
+            }
+
+            override fun onFailure(call: Call<ArrayList<Order>>, t: Throwable) {
+                Log.e(TAG, "onFailure: ${t.message}", t)
+                showSnackbar(
+                    layout,
+                    R.string.err_an_error_was_happened,
+                    Snackbar.LENGTH_LONG,
+                    bottomNav,
+                    true
+                )
+            }
+        })
+    }
+
+    private fun initOrdersProvider() {
+        ordersProvider = OrdersProvider(currentUser?.sessionToken!!)
+    }
+
+    private fun setupViews(view: View) {
+        layout = view.findViewById(R.id.clientOrdersStatus)
+        bottomNav = requireActivity().findViewById(R.id.bottomNav_client)
+        rvOrders = view.findViewById(R.id.rv_orders)
+    }
+
+    private fun initSharedPref() {
+        sharedPref = SharedPref(requireActivity())
+    }
+
+    private fun getUserFromSession() {
+        if (!sharedPref.getData("user").isNullOrBlank()) {
+            currentUser = Gson().fromJson(sharedPref.getData("user"), User::class.java)
         }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_client_orders_status, container, false)
+    companion object {
+        private const val TAG = "ClientOrdersStatusFragment"
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment ClientOrdersStatusFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            ClientOrdersStatusFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
-    }
+
 }

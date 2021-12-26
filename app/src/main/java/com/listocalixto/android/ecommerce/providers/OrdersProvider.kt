@@ -15,6 +15,9 @@ class OrdersProvider(private val token: String) {
         orderRoutes = api.getOrderRoutes(token)
     }
 
+    fun getOrdersByStatus(status: String): Call<ArrayList<Order>>? =
+        orderRoutes?.getOrdersByStatus(status, token)
+
     fun create(order: Order): Call<ResponseHttp>? = orderRoutes?.create(order, token)
 
 }
