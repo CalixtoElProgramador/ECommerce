@@ -5,6 +5,7 @@ import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.widget.Toolbar
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -12,14 +13,28 @@ import com.google.android.material.button.MaterialButton
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
+import com.google.gson.Gson
 import com.listocalixto.android.ecommerce.R
+import com.listocalixto.android.ecommerce.activities.client.address.list.ClientAddressListActivity
 import com.listocalixto.android.ecommerce.activities.client.address.map.ClientAddressMapActivity
+import com.listocalixto.android.ecommerce.models.Address
+import com.listocalixto.android.ecommerce.models.ResponseHttp
+import com.listocalixto.android.ecommerce.models.User
+import com.listocalixto.android.ecommerce.providers.AddressProvider
+import com.listocalixto.android.ecommerce.util.SharedPref
 import com.listocalixto.android.ecommerce.util.showSnackbar
+import com.tommasoberlose.progressdialog.ProgressDialogFragment
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class ClientAddressCreateActivity : AppCompatActivity() {
 
     private var addressLat = 0.0
     private var addressLng = 0.0
+    private var addressProvider: AddressProvider? = null
+    private var sharedPref: SharedPref? = null
+    private var currentUser: User? = null
 
     private lateinit var layout: ConstraintLayout
     private lateinit var toolbar: Toolbar
@@ -34,6 +49,9 @@ class ClientAddressCreateActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_client_address_create)
+        initSharedPref()
+        getUserFromSession()
+        initAddressProvider()
         setupViews()
         setupToolbar()
 
@@ -42,10 +60,26 @@ class ClientAddressCreateActivity : AppCompatActivity() {
 
     }
 
+    private fun initSharedPref() {
+        sharedPref = SharedPref(this)
+    }
+
+    private fun getUserFromSession() {
+        val gson = Gson()
+        if (!sharedPref?.getData("user").isNullOrBlank()) {
+            currentUser = gson.fromJson(sharedPref?.getData("user"), User::class.java)
+        }
+    }
+
+    private fun initAddressProvider() {
+        addressProvider = AddressProvider(currentUser?.sessionToken!!)
+    }
+
     private fun validateInputs() {
         val direction = inputDirection.text.toString()
         val neighborhood = inputNeighborhood.text.toString()
         val reference = inputReferencePoint.text.toString()
+        val idUser = currentUser?.id
 
         when {
             direction.isEmpty() || neighborhood.isEmpty() || reference.isEmpty() -> {
@@ -57,16 +91,88 @@ class ClientAddressCreateActivity : AppCompatActivity() {
                     true
                 )
             }
-            else -> {
+
+            idUser.isNullOrEmpty() -> {
                 showSnackbar(
                     layout,
-                    R.string.app_name,
+                    R.string.err_unidentified_user,
                     Snackbar.LENGTH_SHORT,
                     btnCreateAddress,
-                    false
+                    true
                 )
             }
+
+            addressLat == 0.0 || addressLng == 0.0 -> {
+                showSnackbar(
+                    layout,
+                    R.string.err_coordinates_invalids,
+                    Snackbar.LENGTH_SHORT,
+                    btnCreateAddress,
+                    true
+                )
+            }
+
+            else -> {
+                val address = Address(
+                    idUser = idUser,
+                    address = direction,
+                    neighborhood = neighborhood,
+                    lat = addressLat,
+                    lng = addressLng
+                )
+                saveAddress(address)
+            }
         }
+    }
+
+    private fun saveAddress(address: Address) {
+        ProgressDialogFragment.showProgressBar(this)
+        addressProvider?.create(address)?.enqueue(object : Callback<ResponseHttp> {
+            override fun onResponse(call: Call<ResponseHttp>, response: Response<ResponseHttp>) {
+                ProgressDialogFragment.hideProgressBar(this@ClientAddressCreateActivity)
+                Log.d(TAG, "onResponse: $response")
+                Log.d(TAG, "onResponse: Body - ${response.body()}")
+                response.body()?.let {
+                    if (it.isSuccess) {
+                        navigateToClientAddressListActivity()
+                    } else {
+                        showSnackbar(
+                            layout,
+                            R.string.err_missing_permissions,
+                            Snackbar.LENGTH_LONG,
+                            btnCreateAddress,
+                            true
+                        )
+                    }
+                } ?: run {
+                    showSnackbar(
+                        layout,
+                        R.string.err_internet_connection,
+                        Snackbar.LENGTH_LONG,
+                        btnCreateAddress,
+                        true
+                    )
+                }
+            }
+
+            override fun onFailure(call: Call<ResponseHttp>, t: Throwable) {
+                ProgressDialogFragment.hideProgressBar(this@ClientAddressCreateActivity)
+                Log.e(TAG, "onFailure: ${t.message}", t)
+                showSnackbar(
+                    layout,
+                    R.string.err_an_error_was_happened,
+                    Snackbar.LENGTH_LONG,
+                    btnCreateAddress,
+                    true
+                )
+            }
+        })
+    }
+
+    private fun navigateToClientAddressListActivity() {
+        val i = Intent(this, ClientAddressListActivity::class.java)
+        startActivity(i)
+        finish()
     }
 
     private fun navigateToClientAddressMapActivity() {

@@ -4,14 +4,16 @@ module.exports = {
 
     async create(req, res, next) {
         try {
-            
+
             const address = req.body;
             const data = await Address.create(address);
 
             return res.status(201).json({
                 success: true,
                 message: 'The address was created successfully',
-                data: data.id
+                data: {
+                    'id': data.id
+                }
             });
 
         } catch (error) {

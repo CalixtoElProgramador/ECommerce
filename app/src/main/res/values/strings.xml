@@ -80,4 +80,8 @@
     <string name="accept">Accept</string>
     <string name="err_location_permission_is_required">Location permission is required to display the map.</string>
     <string name="settings">Settings</string>
+    <string name="err_unidentified_user">Unidentified user</string>
+    <string name="err_coordinates_invalids">The coordinates are invalids.</string>
+    <string name="address_was_created_successfully">Address was created successfully</string>
+    <string name="err_internet_connection">Verify your internet connection and try again</string>
 </resources>
