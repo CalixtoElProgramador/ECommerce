@@ -77,4 +77,7 @@
     <string name="address_list_activity_subtitle">Choose where do you want receive your shopping.</string>
     <string name="address_create_activity_title">Create</string>
     <string name="address_map_activity_title">Search a location.</string>
+    <string name="accept">Accept</string>
+    <string name="err_location_permission_is_required">Location permission is required to display the map.</string>
+    <string name="settings">Settings</string>
 </resources>

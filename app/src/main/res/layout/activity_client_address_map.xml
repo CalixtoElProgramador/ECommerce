@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/addressMapLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activities.client.address.map.ClientAddressMapActivity">
@@ -18,5 +19,44 @@
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/action_bar" />
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="40dp"
+        android:background="?attr/colorSurface"
+        app:layout_constraintTop_toBottomOf="@id/action_bar">
+
+        <TextView
+            android:id="@+id/mapDirection"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="16dp"
+            android:textAlignment="center"
+            android:textAppearance="?attr/textAppearanceSubtitle2"
+            tools:text="Street #75 with #95" />
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <ImageView
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:src="@drawable/ic_location_on"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="?attr/colorError" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_acceptLocation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="16dp"
+        android:paddingBottom="64dp"
+        android:text="@string/accept"
+        app:cornerRadius="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
