@@ -13,6 +13,18 @@ Order.findByClientAndStatus = (id_client, status) => {
         O.lat,
         O.lng,
         O.timestamp,
+        JSON_AGG(
+            JSON_BUILD_OBJECT(
+                'id', P.id,
+                'name', P.name,
+                'description', P.description,
+                'price', P.price,
+                'image00', P.image00,
+                'image01', P.image01,
+                'image02', P.image02,
+                'quantity', OHP.quantity
+            )
+        ) AS products,
         JSON_BUILD_OBJECT(
             'id', U.id,
             'name', U.name,
@@ -36,10 +48,20 @@ Order.findByClientAndStatus = (id_client, status) => {
         address AS A
     ON
         O.id_address = A.id
+    INNER JOIN
+        order_has_products AS OHP
+    ON
+        OHP.id_order = O.id
+    INNER JOIN
+        products AS P
+    ON
+        P.id = OHP.id_product
     WHERE
         O.id_client = $1
     AND
         O.status = $2
+    GROUP BY
+        O.id, U.id, A.id
     `;
 
     return db.manyOrNone(sql, [
@@ -60,6 +82,18 @@ Order.findByStatus = (status) => {
         O.lat,
         O.lng,
         O.timestamp,
+        JSON_AGG(
+            JSON_BUILD_OBJECT(
+                'id', P.id,
+                'name', P.name,
+                'description', P.description,
+                'price', P.price,
+                'image00', P.image00,
+                'image01', P.image01,
+                'image02', P.image02,
+                'quantity', OHP.quantity
+            )
+        ) AS products,
         JSON_BUILD_OBJECT(
             'id', U.id,
             'name', U.name,
@@ -83,8 +117,18 @@ Order.findByStatus = (status) => {
         address AS A
     ON
         O.id_address = A.id
+    INNER JOIN
+        order_has_products AS OHP
+    ON
+        OHP.id_order = O.id
+    INNER JOIN
+        products AS P
+    ON
+        P.id = OHP.id_product
     WHERE
         O.status = $1
+    GROUP BY
+        O.id, U.id, A.id
     `;
 
     return db.manyOrNone(sql, status);
