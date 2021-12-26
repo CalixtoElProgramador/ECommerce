@@ -31,7 +31,7 @@ class OrdersClientAdapter(private val orders: ArrayList<Order>, activity: Activi
         val order = orders[position]
         holder.orderId.text = "Order #${order.id}"
         holder.dateOfOrder.text = order.timestamp.toString()
-        holder.deliverTo.text = order.idAddress
+        holder.deliverTo.text = order.address?.address
 
     }
 

@@ -7,6 +7,13 @@ import retrofit2.http.*
 
 interface OrdersRoutes {
 
+    @GET("orders/findByClientAndStatus/{id_client}/{status}")
+    fun getOrdersByClientAndStatus(
+        @Path("id_client") idClient: String,
+        @Path("status") status: String,
+        @Header("Authorization") token: String
+    ): Call<ArrayList<Order>>
+
     @GET("orders/findByStatus/{status}")
     fun getOrdersByStatus(
         @Path("status") status: String,

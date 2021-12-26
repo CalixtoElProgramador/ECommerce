@@ -41,41 +41,45 @@ class ClientOrdersStatusFragment : Fragment(R.layout.fragment_client_orders_stat
         getUserFromSession()
         initOrdersProvider()
         setupViews(view)
-        getOrders(status)
+        currentUser?.id?.let {
+            getOrders(it, status)
+        }
+
     }
 
-    private fun getOrders(status: String) {
-        ordersProvider?.getOrdersByStatus(status)?.enqueue(object : Callback<ArrayList<Order>> {
-            override fun onResponse(
-                call: Call<ArrayList<Order>>,
-                response: Response<ArrayList<Order>>
-            ) {
-                Log.d(TAG, "onResponse: $response")
-                Log.d(TAG, "onResponse: Body - ${response.body()}")
-                response.body()?.let {
-                    rvOrders.adapter = OrdersClientAdapter(it, requireActivity())
-                } ?: run {
+    private fun getOrders(idClient: String, status: String) {
+        ordersProvider?.getOrdersByClientAndStatus(idClient, status)
+            ?.enqueue(object : Callback<ArrayList<Order>> {
+                override fun onResponse(
+                    call: Call<ArrayList<Order>>,
+                    response: Response<ArrayList<Order>>
+                ) {
+                    Log.d(TAG, "onResponse: $response")
+                    Log.d(TAG, "onResponse: Body - ${response.body()}")
+                    response.body()?.let {
+                        rvOrders.adapter = OrdersClientAdapter(it, requireActivity())
+                    } ?: run {
+                        showSnackbar(
+                            layout,
+                            R.string.err_internet_connection,
+                            Snackbar.LENGTH_LONG,
+                            bottomNav,
+                            true
+                        )
+                    }
+                }
+
+                override fun onFailure(call: Call<ArrayList<Order>>, t: Throwable) {
+                    Log.e(TAG, "onFailure: ${t.message}", t)
                     showSnackbar(
                         layout,
-                        R.string.err_internet_connection,
+                        R.string.err_an_error_was_happened,
                         Snackbar.LENGTH_LONG,
                         bottomNav,
                         true
                     )
                 }
-            }
-
-            override fun onFailure(call: Call<ArrayList<Order>>, t: Throwable) {
-                Log.e(TAG, "onFailure: ${t.message}", t)
-                showSnackbar(
-                    layout,
-                    R.string.err_an_error_was_happened,
-                    Snackbar.LENGTH_LONG,
-                    bottomNav,
-                    true
-                )
-            }
-        })
+            })
     }
 
     private fun initOrdersProvider() {

@@ -10,12 +10,14 @@ data class Order(
     @SerializedName("id_address") val idAddress: String,
     @SerializedName("status") val status: String? = null,
     @SerializedName("timestamp") var timestamp: Long = 0,
-    @SerializedName("products") val products: ArrayList<Product>
+    @SerializedName("products") val products: ArrayList<Product>,
+    @SerializedName("client") val client: User? = null,
+    @SerializedName("address") val address: Address? = null
 ) {
 
-    override fun toString(): String {
-        return "Order(id=$id, idClient='$idClient', idDelivery=$idDelivery, idAddress='$idAddress', status=$status, timestamp=$timestamp, products=$products)"
-    }
-
     fun toJson(): String = Gson().toJson(this)
+
+    override fun toString(): String {
+        return "Order(id=$id, idClient='$idClient', idDelivery=$idDelivery, idAddress='$idAddress', status=$status, timestamp=$timestamp, products=$products, client=$client, address=$address)"
+    }
 }
