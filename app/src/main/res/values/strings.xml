@@ -86,4 +86,7 @@
     <string name="err_internet_connection">Verify your internet connection and try again</string>
     <string name="cd_image_check_address_item">Send to this address.</string>
     <string name="select_an_address_to_continue">Select an address to continue</string>
+    <string name="order">Order</string>
+    <string name="date_of_order">Date of order:</string>
+    <string name="deliver_to">Deliver to:</string>
 </resources>
