@@ -24,6 +24,7 @@ const upload = multer({
 const users = require('./routes/usersRoutes');
 const categories = require('./routes/categoriesRoutes');
 const products = require('./routes/productsRoutes');
+const address = require('./routes/addressRoutes');
 
 const port = process.env.PORT || 3000;
 app.use(logger('dev'));
@@ -49,6 +50,7 @@ app.set('port', port);
 users(app, upload);
 categories(app, upload);
 products(app, upload);
+address(app);
 
 server.listen(3000, '192.168.1.70' || 'localhost', function() {
     console.log('Application of Node.js ' + port + ' Started...')
