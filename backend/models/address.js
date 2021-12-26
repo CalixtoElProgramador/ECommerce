@@ -27,6 +27,25 @@ Address.create = (address) => {
         new Date()
     ]);
 
+};
+
+Address.findByUser = (id_user) => {
+    const sql = `
+    SELECT
+        id,
+        id_user,
+        address,
+        neighborhood,
+        lat,
+        lng
+    FROM 
+        address
+    WHERE
+        id_user = $1
+    `;
+
+    return db.manyOrNone(sql, id_user)
+
 }
 
 module.exports = Address
