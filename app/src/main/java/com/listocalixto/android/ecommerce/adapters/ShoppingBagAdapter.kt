@@ -42,7 +42,11 @@ class ShoppingBagAdapter(
         val product = products[position]
         Glide.with(activity).load(product.image00).into(holder.imgProduct)
         holder.nameProduct.text = product.name
-        holder.priceProduct.text = "$ ${product.price * product.quantity!!}"
+
+        if (product.quantity != null) {
+            holder.priceProduct.text = "$ ${product.price * product.quantity!!}"
+        }
+
         holder.quantityProduct.text = product.quantity.toString()
 
         holder.imgAddProduct.setOnClickListener { addItem(product, holder) }
@@ -95,11 +99,12 @@ class ShoppingBagAdapter(
     }
 
 
-
     private fun getTotal(): Double {
         var total = 0.0
         products.forEach {
-            total += (it.quantity!! * it.price)
+            if (it.quantity != null) {
+                total += (it.quantity!! * it.price)
+            }
         }
         return total
     }

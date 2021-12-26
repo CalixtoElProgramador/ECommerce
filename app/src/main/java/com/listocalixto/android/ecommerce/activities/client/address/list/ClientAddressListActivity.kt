@@ -12,13 +12,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.snackbar.Snackbar
 import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import com.listocalixto.android.ecommerce.R
 import com.listocalixto.android.ecommerce.activities.client.address.create.ClientAddressCreateActivity
 import com.listocalixto.android.ecommerce.activities.client.payments.form.ClientPaymentFormActivity
 import com.listocalixto.android.ecommerce.adapters.AddressAdapter
-import com.listocalixto.android.ecommerce.models.Address
-import com.listocalixto.android.ecommerce.models.User
+import com.listocalixto.android.ecommerce.models.*
 import com.listocalixto.android.ecommerce.providers.AddressProvider
+import com.listocalixto.android.ecommerce.providers.OrdersProvider
 import com.listocalixto.android.ecommerce.util.SharedPref
 import com.listocalixto.android.ecommerce.util.showSnackbar
 import retrofit2.Call
@@ -29,6 +30,7 @@ class ClientAddressListActivity : AppCompatActivity() {
 
     private var sharedPref: SharedPref? = null
     private var currentUser: User? = null
+    private var selectedAddress: Address? = null
     private var addressProvider: AddressProvider? = null
 
     private lateinit var layout: ConstraintLayout
@@ -37,23 +39,58 @@ class ClientAddressListActivity : AppCompatActivity() {
     private lateinit var btnNext: MaterialButton
     private lateinit var btnCreateAnAddress: MaterialButton
 
+    private var ordersProvider: OrdersProvider? = null
+    private var selectedProducts = arrayListOf<Product>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_client_address_list)
         initSharedPref()
         getUserFromSession()
-        initAddressProvider()
+        getAddressFromSession()
+        getProductsFromSharedPref()
+        initProviders()
         setupViews()
         getAddressesFromProvider()
         setupToolbar()
 
-        btnNext.setOnClickListener { getAddressFromSession() }
+        btnNext.setOnClickListener { verifyInputs() }
         btnCreateAnAddress.setOnClickListener { navigateToClientAddressCreateActivity() }
+    }
+
+    private fun verifyInputs() {
+        val user = currentUser
+        val address = selectedAddress
+        val products = selectedProducts
+
+        when {
+            user == null || address == null || products.isEmpty() -> {
+                showSnackbar(
+                    layout,
+                    R.string.err_an_error_was_happened,
+                    Snackbar.LENGTH_SHORT,
+                    btnNext,
+                    true
+                )
+            }
+
+            else -> {
+                val order = Order(
+                    idClient = user.id!!,
+                    idAddress = address.id!!,
+                    status = "PAID",
+                    products = products
+                )
+                createOrder(order)
+            }
+
+        }
+
     }
 
     private fun getAddressFromSession() {
         if (!sharedPref?.getData("address").isNullOrEmpty()) {
-            navigateToClientPaymentFormActivity()
+            selectedAddress = Gson().fromJson(sharedPref?.getData("address"), Address::class.java)
         } else {
             showSnackbar(
                 layout,
@@ -127,8 +164,47 @@ class ClientAddressListActivity : AppCompatActivity() {
         }
     }
 
-    private fun initAddressProvider() {
+    private fun initProviders() {
         addressProvider = AddressProvider(currentUser?.sessionToken!!)
+        ordersProvider = OrdersProvider(currentUser?.sessionToken!!)
+    }
+
+    private fun createOrder(order: Order) {
+        ordersProvider?.create(order)?.enqueue(object : Callback<ResponseHttp> {
+            override fun onResponse(call: Call<ResponseHttp>, response: Response<ResponseHttp>) {
+                Log.d(TAG, "onResponse: $response")
+                Log.d(TAG, "onResponse: Body - ${response.body()}")
+                response.body()?.let {
+                    showSnackbar(layout, R.string.app_name, Snackbar.LENGTH_SHORT, btnNext, false)
+                } ?: run {
+                    showSnackbar(
+                        layout,
+                        R.string.err_internet_connection,
+                        Snackbar.LENGTH_LONG,
+                        btnNext,
+                        true
+                    )
+                }
+            }
+
+            override fun onFailure(call: Call<ResponseHttp>, t: Throwable) {
+                Log.e(TAG, "onFailure: ${t.message}", t)
+                showSnackbar(
+                    layout,
+                    R.string.err_an_error_was_happened,
+                    Snackbar.LENGTH_LONG,
+                    btnNext,
+                    true
+                )
+            }
+        })
+    }
+
+    private fun getProductsFromSharedPref() {
+        if (!sharedPref?.getData("order").isNullOrBlank()) {
+            val type = object : TypeToken<ArrayList<Product>>() {}.type
+            selectedProducts = Gson().fromJson(sharedPref?.getData("order"), type)
+        }
     }
 
     private fun navigateToClientAddressCreateActivity() {

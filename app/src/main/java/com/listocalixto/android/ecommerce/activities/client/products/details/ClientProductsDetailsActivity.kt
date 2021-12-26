@@ -119,7 +119,7 @@ class ClientProductsDetailsActivity : AppCompatActivity() {
         val index = getIndexOf(product?.id!!)
 
         if (index == -1) {
-            if (product?.quantity == 0) {
+            if (product?.quantity == null) {
                 product?.quantity = 1
             }
             selectedProducts.add(product!!)
