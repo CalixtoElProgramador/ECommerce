@@ -116,9 +116,32 @@
         android:id="@+id/status"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="32dp"
+        android:layout_marginBottom="16dp"
         android:text="@string/status"
         android:textAppearance="?attr/textAppearanceSubtitle1"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@id/labelDeliveryOrder"
+        app:layout_constraintStart_toStartOf="@id/total" />
+
+    <TextView
+        android:id="@+id/deliveryNameOrder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:textAppearance="?attr/textAppearanceBody2"
+        app:layout_constraintBottom_toBottomOf="@id/labelDeliveryOrder"
+        app:layout_constraintStart_toEndOf="@id/labelDeliveryOrder"
+        app:layout_constraintTop_toTopOf="@id/labelDeliveryOrder"
+        tools:text="Aaron Calixto" />
+
+    <TextView
+        android:id="@+id/labelDeliveryOrder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
+        android:text="@string/dispatcher"
+        android:textAppearance="?attr/textAppearanceSubtitle1"
+        android:textColor="?attr/colorSecondary"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@id/deliveries"
         app:layout_constraintStart_toStartOf="@id/total" />

@@ -46,6 +46,8 @@ class RestaurantOrdersDetailActivity : AppCompatActivity() {
     private lateinit var textDateOfOrder: TextView
     private lateinit var textStatus: TextView
     private lateinit var textTotalPrice: TextView
+    private lateinit var textLabelDispatcher: TextView
+    private lateinit var textDispatcherName: TextView
     private lateinit var textLabelSpinner: TextView
     private lateinit var spinner: Spinner
     private lateinit var btnAssignDelivery: MaterialButton
@@ -59,7 +61,7 @@ class RestaurantOrdersDetailActivity : AppCompatActivity() {
         getUserFromSession()
         initProviders()
         setupViews()
-        hideViewsIfOrderHasDispatcher(order.idDelivery)
+        hideViewsIfOrderHasDispatcher(order.idDelivery, order.delivery)
         setupSpinnerWitDeliveries()
         setupRecyclerView(order.products)
         setupData(order)
@@ -69,15 +71,24 @@ class RestaurantOrdersDetailActivity : AppCompatActivity() {
 
     }
 
-    private fun hideViewsIfOrderHasDispatcher(idDelivery: String?) {
+    @SuppressLint("SetTextI18n")
+    private fun hideViewsIfOrderHasDispatcher(idDelivery: String?, delivery: User?) {
         idDelivery?.let {
             textLabelSpinner.visibility = View.GONE
             spinner.visibility = View.GONE
             btnAssignDelivery.visibility = View.GONE
+
+            textLabelDispatcher.visibility = View.VISIBLE
+            textDispatcherName.visibility = View.VISIBLE
+
+            textDispatcherName.text = "${delivery?.name} ${delivery?.lastname}"
         } ?: run {
             textLabelSpinner.visibility = View.VISIBLE
             spinner.visibility = View.VISIBLE
             btnAssignDelivery.visibility = View.VISIBLE
+
+            textLabelDispatcher.visibility = View.GONE
+            textDispatcherName.visibility = View.GONE
         }
     }
 
@@ -237,6 +248,8 @@ class RestaurantOrdersDetailActivity : AppCompatActivity() {
         textDateOfOrder = findViewById(R.id.dateOfOrder)
         textStatus = findViewById(R.id.statusOrder)
         textTotalPrice = findViewById(R.id.totalPriceOrder)
+        textDispatcherName = findViewById(R.id.deliveryNameOrder)
+        textLabelDispatcher = findViewById(R.id.labelDeliveryOrder)
         textLabelSpinner = findViewById(R.id.deliveries)
         spinner = findViewById(R.id.spinner_deliveries)
         btnAssignDelivery = findViewById(R.id.btn_assignDelivery)
