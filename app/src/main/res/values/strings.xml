@@ -101,4 +101,5 @@
     <string name="start_trip">Start trip</string>
     <string name="order_started">Order has been started.</string>
     <string name="back_to_the_map">Back to the map</string>
+    <string name="address">Address</string>
 </resources>

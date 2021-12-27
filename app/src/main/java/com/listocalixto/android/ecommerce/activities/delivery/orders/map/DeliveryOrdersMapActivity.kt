@@ -88,8 +88,8 @@ class DeliveryOrdersMapActivity : AppCompatActivity(), OnMapReadyCallback {
             source = myLocationLatLng!!,
             destination = addressLocation,
             context = this,
-            color = Color.GREEN,
-            polygonWidth = 8,
+            color = Color.BLACK,
+            polygonWidth = 12,
             markers = false
         )
     }

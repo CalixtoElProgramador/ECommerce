@@ -17,19 +17,147 @@
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/layout_userInfo"
         app:layout_constraintTop_toBottomOf="@id/action_bar" />
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_acceptLocation"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout_userInfo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="16dp"
-        android:paddingBottom="64dp"
-        android:text="@string/accept"
-        android:visibility="gone"
-        app:cornerRadius="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="parent" />
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <TextView
+            android:id="@+id/labelNeighborhood"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:text="@string/neighborhood"
+            android:textAppearance="?attr/textAppearanceCaption"
+            app:layout_constraintEnd_toStartOf="@id/ic_userLocationSearching"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/userNeighborhood"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textAppearance="?attr/textAppearanceBody2"
+            app:layout_constraintEnd_toEndOf="@id/labelNeighborhood"
+            app:layout_constraintStart_toStartOf="@id/labelNeighborhood"
+            app:layout_constraintTop_toBottomOf="@id/labelNeighborhood"
+            tools:text="Gran Santa Fe Norte" />
+
+        <ImageView
+            android:id="@+id/ic_userLocationSearching"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginEnd="16dp"
+            android:padding="8dp"
+            android:src="@drawable/ic_location_searching"
+            app:layout_constraintBottom_toBottomOf="@id/userNeighborhood"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/labelNeighborhood" />
+
+        <TextView
+            android:id="@+id/labelAddress"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:text="@string/address"
+            android:textAppearance="?attr/textAppearanceCaption"
+            app:layout_constraintEnd_toStartOf="@id/ic_userLocationSearching"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/userNeighborhood" />
+
+        <TextView
+            android:id="@+id/userAddress"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textAppearance="?attr/textAppearanceBody2"
+            app:layout_constraintEnd_toEndOf="@id/labelAddress"
+            app:layout_constraintStart_toStartOf="@id/labelAddress"
+            app:layout_constraintTop_toBottomOf="@id/labelAddress"
+            tools:text="Street #43 and #12" />
+
+        <ImageView
+            android:id="@+id/ic_userLocation"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginEnd="16dp"
+            android:padding="8dp"
+            android:src="@drawable/ic_location_on"
+            app:layout_constraintBottom_toBottomOf="@id/userAddress"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/labelAddress" />
+
+        <com.google.android.material.divider.MaterialDivider
+            android:id="@+id/divider"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            app:layout_constraintTop_toBottomOf="@id/userAddress" />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/img_userPicture"
+            android:layout_width="72dp"
+            android:layout_height="72dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            app:civ_border_width="2dp"
+            app:civ_border_color="?attr/colorPrimary"
+            app:layout_constraintBottom_toTopOf="@id/btn_acceptLocation"
+            app:layout_constraintStart_toStartOf="@id/divider"
+            app:layout_constraintTop_toBottomOf="@id/divider"
+            tools:src="@drawable/ic_launcher_background" />
+
+        <TextView
+            android:id="@+id/labelRole"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:textAppearance="?attr/textAppearanceCaption"
+            app:layout_constraintBottom_toTopOf="@id/userName"
+            app:layout_constraintEnd_toStartOf="@id/ic_userPhone"
+            app:layout_constraintStart_toEndOf="@id/img_userPicture"
+            app:layout_constraintTop_toTopOf="@id/img_userPicture"
+            app:layout_constraintVertical_chainStyle="packed"
+            tools:text="Client" />
+
+        <TextView
+            android:id="@+id/userName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textAppearance="?attr/textAppearanceBody2"
+            app:layout_constraintBottom_toBottomOf="@id/img_userPicture"
+            app:layout_constraintEnd_toEndOf="@id/labelRole"
+            app:layout_constraintStart_toStartOf="@id/labelRole"
+            app:layout_constraintTop_toBottomOf="@id/labelRole"
+            tools:text="Aaron Calixto" />
+
+        <ImageView
+            android:id="@+id/ic_userPhone"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginEnd="16dp"
+            android:padding="8dp"
+            android:src="@drawable/ic_local_phone"
+            app:layout_constraintBottom_toBottomOf="@id/userName"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/labelRole" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_acceptLocation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="16dp"
+            android:paddingBottom="64dp"
+            android:text="@string/accept"
+            app:cornerRadius="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="parent" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
