@@ -62,6 +62,9 @@ Order.findByClientAndStatus = (id_client, status) => {
         O.status = $2
     GROUP BY
         O.id, U.id, A.id
+    ORDER BY
+        O.timestamp
+    DESC
     `;
 
     return db.manyOrNone(sql, [
@@ -129,6 +132,9 @@ Order.findByStatus = (status) => {
         O.status = $1
     GROUP BY
         O.id, U.id, A.id
+    ORDER BY
+        O.timestamp
+    DESC
     `;
 
     return db.manyOrNone(sql, status);

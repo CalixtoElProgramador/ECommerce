@@ -1,5 +1,6 @@
 const Order = require('../models/order')
 const OrderHasProducts = require('../models/order_has_prodcuts');
+const timeRelative = require('../utils/time_relative');
 
 module.exports = {
 
@@ -8,7 +9,19 @@ module.exports = {
 
             const id_client = req.params.id_client;
             const status = req.params.status;
-            const data = await Order.findByClientAndStatus(id_client, status)
+            let data = await Order.findByClientAndStatus(id_client, status)
+
+            /** 
+             * This small cycle is to change the timestamp of each of the commands to 
+             * something much more readable and normal for a person.  
+             */
+
+            data.forEach(d => {
+                d.timestamp = timeRelative(new Date().getTime(), d.timestamp);
+            });
+
+            // console.log('Order: ', data);
+
             return res.status(201).json(data);
 
         } catch (error) {
@@ -27,7 +40,12 @@ module.exports = {
         try {
 
             const status = req.params.status;
-            const data = await Order.findByStatus(status);
+            let data = await Order.findByStatus(status);
+
+            data.forEach(d => {
+                d.timestamp = timeRelative(new Date().getTime(), d.timestamp);
+            });
+
             return res.status(201).json(data);
 
         } catch (error) {
