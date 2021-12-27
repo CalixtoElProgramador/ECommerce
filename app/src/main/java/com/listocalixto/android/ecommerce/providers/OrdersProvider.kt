@@ -23,4 +23,10 @@ class OrdersProvider(private val token: String) {
 
     fun create(order: Order): Call<ResponseHttp>? = orderRoutes?.create(order, token)
 
+    fun updateToDispatched(order: Order): Call<ResponseHttp>? = orderRoutes?.updateToDispatched(order, token)
+
+    fun updateToOnTheWay(order: Order): Call<ResponseHttp>? = orderRoutes?.updateToOnTheWay(order, token)
+
+    fun updateToDelivered(order: Order): Call<ResponseHttp>? = orderRoutes?.updateToDelivered(order, token)
+
 }
