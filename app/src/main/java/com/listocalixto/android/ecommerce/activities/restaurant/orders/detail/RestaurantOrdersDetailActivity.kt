@@ -1,4 +1,4 @@
-package com.listocalixto.android.ecommerce.activities.orders.detail
+package com.listocalixto.android.ecommerce.activities.restaurant.orders.detail
 
 import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
@@ -13,7 +13,7 @@ import com.listocalixto.android.ecommerce.models.Order
 import com.listocalixto.android.ecommerce.models.Product
 import java.util.ArrayList
 
-class ClientOrdersDetailActivity : AppCompatActivity() {
+class RestaurantOrdersDetailActivity : AppCompatActivity() {
 
     private lateinit var toolbar: Toolbar
     private lateinit var rvOrderProducts: RecyclerView
@@ -25,7 +25,7 @@ class ClientOrdersDetailActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_client_orders_detail)
+        setContentView(R.layout.activity_restaurant_orders_detail)
         val order = Gson().fromJson(intent.getStringExtra("order"), Order::class.java)
         setupViews()
         setupRecyclerView(order.products)
@@ -69,7 +69,7 @@ class ClientOrdersDetailActivity : AppCompatActivity() {
     }
 
     companion object {
-        private const val TAG = "ClientOrdersDetailActivity"
+        private const val TAG = "RestaurantOrdersDetailActivity"
     }
 
 }

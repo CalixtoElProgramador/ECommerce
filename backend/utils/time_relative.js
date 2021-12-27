@@ -17,7 +17,7 @@ module.exports = (current, previous) => {
     }
 
     else if (elapsed < msPerDay) {
-        return `${Math.round(elapsed/msPerHour)} houres ago`
+        return `${Math.round(elapsed/msPerHour)} hours ago`
     }
 
     else if (elapsed < msPerMonth) {

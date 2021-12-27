@@ -9,18 +9,18 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.listocalixto.android.ecommerce.R
-import com.listocalixto.android.ecommerce.activities.client.orders.detail.ClientOrdersDetailActivity
+import com.listocalixto.android.ecommerce.activities.restaurant.orders.detail.RestaurantOrdersDetailActivity
 import com.listocalixto.android.ecommerce.models.Order
 import com.listocalixto.android.ecommerce.util.SharedPref
 
-class OrdersClientAdapter(private val orders: ArrayList<Order>, private val activity: Activity) :
-    RecyclerView.Adapter<OrdersClientAdapter.OrdersViewHolder>() {
+class OrdersRestaurantAdapter(private val orders: ArrayList<Order>, private val activity: Activity) :
+    RecyclerView.Adapter<OrdersRestaurantAdapter.OrdersViewHolder>() {
 
     val sharedPref = SharedPref(activity)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): OrdersViewHolder {
         val view =
-            LayoutInflater.from(parent.context).inflate(R.layout.cardview_orders, parent, false)
+            LayoutInflater.from(parent.context).inflate(R.layout.cardview_orders_restaurant, parent, false)
         return OrdersViewHolder(view)
     }
 
@@ -34,12 +34,13 @@ class OrdersClientAdapter(private val orders: ArrayList<Order>, private val acti
         holder.orderId.text = "Order #${order.id}"
         holder.dateOfOrder.text = order.timestamp.toString()
         holder.deliverTo.text = order.address?.address
+        holder.clientName.text = "${order.client?.name} ${order.client?.lastname}"
 
         holder.itemView.setOnClickListener { navigateToOrdersDetailActivity(order) }
     }
 
     private fun navigateToOrdersDetailActivity(order: Order) {
-        val i = Intent(activity, ClientOrdersDetailActivity::class.java)
+        val i = Intent(activity, RestaurantOrdersDetailActivity::class.java)
         i.putExtra("order", order.toJson())
         activity.startActivity(i)
     }
@@ -48,6 +49,7 @@ class OrdersClientAdapter(private val orders: ArrayList<Order>, private val acti
         val orderId: TextView = view.findViewById(R.id.orderId)
         val dateOfOrder: TextView = view.findViewById(R.id.dateOfOrderItem)
         val deliverTo: TextView = view.findViewById(R.id.deliverToItem)
+        val clientName: TextView = view.findViewById(R.id.clientNameItem)
     }
 
 }

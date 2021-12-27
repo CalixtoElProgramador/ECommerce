@@ -22,9 +22,13 @@
         android:theme="@style/Theme.ECommerce"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".activities.orders.detail.ClientOrdersDetailActivity"
+            android:name=".activities.restaurant.orders.detail.RestaurantOrdersDetailActivity"
             android:exported="true"
-            android:parentActivityName=".activities.client.ClientActivity"/>
+            android:parentActivityName=".activities.restaurant.RestaurantHomeActivity"/>
+        <activity
+            android:name=".activities.client.orders.detail.ClientOrdersDetailActivity"
+            android:exported="true"
+            android:parentActivityName=".activities.client.ClientActivity" />
         <activity
             android:name=".activities.client.payments.form.ClientPaymentFormActivity"
             android:exported="true" />

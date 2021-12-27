@@ -2,18 +2,43 @@ package com.listocalixto.android.ecommerce.fragments.restaurant
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
+import androidx.viewpager2.widget.ViewPager2
+import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayoutMediator
 import com.listocalixto.android.ecommerce.R
+import com.listocalixto.android.ecommerce.adapters.RestaurantTabsPagerAdapter
+import com.listocalixto.android.ecommerce.adapters.TabsPagerAdapter
 
 class RestaurantOrdersFragment : Fragment(R.layout.fragment_restaurante_orders) {
 
+    private lateinit var tabLayout: TabLayout
+    private lateinit var vpOrder: ViewPager2
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setupViews(view)
+        setupViewPagerWithTabLayout()
+    }
 
+    private fun setupViewPagerWithTabLayout() {
+        val adapter = RestaurantTabsPagerAdapter(requireActivity().supportFragmentManager, lifecycle, 4)
+        vpOrder.adapter = adapter
+        vpOrder.isUserInputEnabled = true
 
+        TabLayoutMediator(tabLayout, vpOrder) { tab, position ->
+            when (position) {
+                0 -> { tab.text = "PAID" }
+                1 -> { tab.text = "DISPATCHED" }
+                2 -> { tab.text = "ON THE WAY" }
+                3 -> { tab.text = "DELIVERED" }
+            }
+        }.attach()
+    }
 
+    private fun setupViews(view: View) {
+        tabLayout = view.findViewById(R.id.tabLayout_orders)
+        vpOrder = view.findViewById(R.id.vp_orders)
     }
 
 }
