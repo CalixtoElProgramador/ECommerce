@@ -166,4 +166,28 @@ Order.create = (order) => {
 
 };
 
+Order.update = (order) => {
+    const sql = `
+    UPDATE
+        orders
+    SET
+        id_client = $2,
+        id_delivery = $3,
+        id_address = $4,
+        status = $5,
+        updated_at = $6
+    WHERE
+        id = $1
+    `;
+
+    return db.none(sql, [
+        order.id,
+        order.id_client,
+        order.id_delivery,
+        order.id_address,
+        order.status,
+        new Date()
+    ]);
+};
+
 module.exports = Order

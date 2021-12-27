@@ -10,4 +10,9 @@ module.exports = (app) => {
     // POST - SAVE DATA
     app.post('/api/orders/create', passport.authenticate('jwt', {session: false}), OrdersController.create);
 
+    //PUT - UPDATE
+    app.put('/api/orders/updateToDispatched', passport.authenticate('jwt', {session: false}), OrdersController.updateToDispatched);
+    app.put('/api/orders/updateToOnTheWay', passport.authenticate('jwt', {session: false}), OrdersController.updateToOnTheWay);
+    app.put('/api/orders/updateToDelivered', passport.authenticate('jwt', {session: false}), OrdersController.updateToDelivered);
+
 }

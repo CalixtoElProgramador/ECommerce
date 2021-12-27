@@ -93,6 +93,72 @@ module.exports = {
             });
 
         }
+    },
+
+    async updateToDispatched(req, res, next) {
+        try {
+            let order = req.body;
+            order.status = 'DISPATCHED';
+            await Order.update(order);
+            
+            return res.status(201).json({
+                success: true,
+                message: 'The order was updated successfully [DISPATCHED]'
+            });
+
+        } catch (error) {
+            console.log(`Error: ${error}`);
+            return res.status(501).json({
+                success: false,
+                message: 'An error was happened at uptade the order',
+                error: error
+            });
+
+        }
+    },
+
+    async updateToOnTheWay(req, res, next) {
+        try {
+            let order = req.body;
+            order.status = 'ON THE WAY';
+            await Order.update(order);
+            
+            return res.status(201).json({
+                success: true,
+                message: 'The order was updated successfully [ON THE WAY]'
+            });
+
+        } catch (error) {
+            console.log(`Error: ${error}`);
+            return res.status(501).json({
+                success: false,
+                message: 'An error was happened at uptade the order',
+                error: error
+            });
+
+        }
+    },
+
+    async updateToDelivered(req, res, next) {
+        try {
+            let order = req.body;
+            order.status = 'DELIVERED';
+            await Order.update(order);
+            
+            return res.status(201).json({
+                success: true,
+                message: 'The order was updated successfully [DELIVERED]'
+            });
+
+        } catch (error) {
+            console.log(`Error: ${error}`);
+            return res.status(501).json({
+                success: false,
+                message: 'An error was happened at uptade the order',
+                error: error
+            });
+
+        }
     }
 
 }
