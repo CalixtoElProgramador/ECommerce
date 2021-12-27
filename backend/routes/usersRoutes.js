@@ -5,6 +5,7 @@ module.exports = (app, upload) => {
 
     // GET
     app.get('/api/users/getAll', UsersController.getAll);
+    app.get('/api/users/findDeliveryMan', passport.authenticate('jwt', {session: false}), UsersController.findByDeliveryMan);
     
     // POST - SAVE DATA
     app.post('/api/users/create', UsersController.register);

@@ -15,6 +15,35 @@ User.getAll = () => {
 
 }
 
+User.findByDeliveryMan = () => {
+    const sql = `
+    SELECT
+        U.id,
+        U.email,
+        U.name,
+        U.lastname,
+        U.phone,
+        U.image,
+        U.password,
+        U.session_token
+    FROM
+        users AS U
+    INNER JOIN
+        user_has_roles AS UHR
+    ON
+        UHR.id_user = U.id
+    INNER JOIN
+        roles AS R
+    ON
+        R.id = UHR.id_role
+    WHERE
+        R.id = 3
+    `;
+
+    return db.manyOrNone(sql);
+
+};
+
 User.findById = (id, callback) => {
     const sql = `
     SELECT
