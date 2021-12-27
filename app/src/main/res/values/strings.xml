@@ -93,4 +93,5 @@
     <string name="track_order">Track order</string>
     <string name="status">Status:</string>
     <string name="client">Client:</string>
+    <string name="assign_a_delivery_man">Assign a delivery man</string>
 </resources>

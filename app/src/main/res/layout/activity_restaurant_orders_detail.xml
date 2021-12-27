@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.client.orders.detail.ClientOrdersDetailActivity">
+    tools:context=".activities.restaurant.orders.detail.RestaurantOrdersDetailActivity">
 
     <include
         android:id="@+id/action_bar"
@@ -112,10 +112,19 @@
         android:id="@+id/status"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="48dp"
+        android:layout_marginBottom="16dp"
         android:text="@string/status"
         android:textAppearance="?attr/textAppearanceSubtitle1"
+        app:layout_constraintBottom_toTopOf="@id/spinner_deliveries"
+        app:layout_constraintStart_toStartOf="@id/total" />
+
+    <Spinner
+        android:id="@+id/spinner_deliveries"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="48dp"
         app:layout_constraintBottom_toTopOf="@id/total"
+        app:layout_constraintEnd_toEndOf="@id/totalPriceOrder"
         app:layout_constraintStart_toStartOf="@id/total" />
 
     <TextView
@@ -149,7 +158,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
-        android:text="@string/track_order"
+        android:text="@string/assign_a_delivery_man"
         app:cornerRadius="16dp"
         app:layout_constraintBottom_toBottomOf="parent" />
 

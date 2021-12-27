@@ -20,13 +20,16 @@
         <entry key="..\:/Users/calix/Documents/-/Android/ECommerce/app/src/main/res/layout/activity_main.xml" value="0.19444444444444445" />
         <entry key="..\:/Users/calix/Documents/-/Android/ECommerce/app/src/main/res/layout/activity_register.xml" value="0.19444444444444445" />
         <entry key="..\:/Users/calix/Documents/-/Android/ECommerce/app/src/main/res/layout/activity_restaurant_home.xml" value="0.20185185185185187" />
+        <entry key="..\:/Users/calix/Documents/-/Android/ECommerce/app/src/main/res/layout/activity_restaurant_orders_detail.xml" value="0.2234375" />
         <entry key="..\:/Users/calix/Documents/-/Android/ECommerce/app/src/main/res/layout/activity_save_image.xml" value="0.209375" />
         <entry key="..\:/Users/calix/Documents/-/Android/ECommerce/app/src/main/res/layout/activity_select_roles.xml" value="0.20925925925925926" />
         <entry key="..\:/Users/calix/Documents/-/Android/ECommerce/app/src/main/res/layout/cardview_address.xml" value="0.2234375" />
         <entry key="..\:/Users/calix/Documents/-/Android/ECommerce/app/src/main/res/layout/cardview_categories.xml" value="0.2234375" />
         <entry key="..\:/Users/calix/Documents/-/Android/ECommerce/app/src/main/res/layout/cardview_order_products.xml" value="0.25" />
         <entry key="..\:/Users/calix/Documents/-/Android/ECommerce/app/src/main/res/layout/cardview_orders.xml" value="0.22" />
+        <entry key="..\:/Users/calix/Documents/-/Android/ECommerce/app/src/main/res/layout/cardview_orders_restaurant.xml" value="0.2234375" />
         <entry key="..\:/Users/calix/Documents/-/Android/ECommerce/app/src/main/res/layout/cardview_product.xml" value="0.2234375" />
+        <entry key="..\:/Users/calix/Documents/-/Android/ECommerce/app/src/main/res/layout/cardview_restaurant_orders.xml" value="0.23541666666666666" />
         <entry key="..\:/Users/calix/Documents/-/Android/ECommerce/app/src/main/res/layout/cardview_roles.xml" value="0.2234375" />
         <entry key="..\:/Users/calix/Documents/-/Android/ECommerce/app/src/main/res/layout/cardview_shopping_bag.xml" value="0.22" />
         <entry key="..\:/Users/calix/Documents/-/Android/ECommerce/app/src/main/res/layout/fragment_client_categories.xml" value="0.2234375" />
@@ -35,6 +38,7 @@
         <entry key="..\:/Users/calix/Documents/-/Android/ECommerce/app/src/main/res/layout/fragment_client_profile.xml" value="0.20462962962962963" />
         <entry key="..\:/Users/calix/Documents/-/Android/ECommerce/app/src/main/res/layout/fragment_delivery_orders.xml" value="0.20185185185185187" />
         <entry key="..\:/Users/calix/Documents/-/Android/ECommerce/app/src/main/res/layout/fragment_restaurant_category.xml" value="0.2234375" />
+        <entry key="..\:/Users/calix/Documents/-/Android/ECommerce/app/src/main/res/layout/fragment_restaurant_orders_status.xml" value="0.2234375" />
         <entry key="..\:/Users/calix/Documents/-/Android/ECommerce/app/src/main/res/layout/fragment_restaurant_product.xml" value="0.2234375" />
         <entry key="..\:/Users/calix/Documents/-/Android/ECommerce/app/src/main/res/layout/fragment_restaurante_orders.xml" value="0.2234375" />
         <entry key="..\:/Users/calix/Documents/-/Android/ECommerce/app/src/main/res/menu/bottom_nav_menu_client.xml" value="0.2234375" />
