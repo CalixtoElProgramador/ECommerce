@@ -11,7 +11,6 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.gson.Gson
 import com.listocalixto.android.ecommerce.R
 import com.listocalixto.android.ecommerce.adapters.OrdersDeliveryAdapter
-import com.listocalixto.android.ecommerce.adapters.OrdersRestaurantAdapter
 import com.listocalixto.android.ecommerce.models.Order
 import com.listocalixto.android.ecommerce.models.User
 import com.listocalixto.android.ecommerce.providers.OrdersProvider
@@ -47,7 +46,7 @@ class DeliveryOrdersStatusFragment : Fragment(R.layout.fragment_delivery_orders_
     }
 
     private fun getOrders(status: String) {
-        ordersProvider?.getOrdersByStatus(status)
+        ordersProvider?.getOrdersByDeliveryAndStatus(currentUser?.id!!, status)
             ?.enqueue(object : Callback<ArrayList<Order>> {
                 override fun onResponse(
                     call: Call<ArrayList<Order>>,

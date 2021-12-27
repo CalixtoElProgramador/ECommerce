@@ -23,7 +23,8 @@
         android:usesCleartextTraffic="true">
         <activity
             android:name=".activities.delivery.orders.detail.DeliveryOrdersDetailActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:parentActivityName=".activities.delivery.DeliveryHomeActivity"/>
         <activity
             android:name=".activities.restaurant.orders.detail.RestaurantOrdersDetailActivity"
             android:exported="true"
