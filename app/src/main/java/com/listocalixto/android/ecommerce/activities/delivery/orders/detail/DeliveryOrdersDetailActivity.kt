@@ -14,7 +14,7 @@ import com.google.android.material.button.MaterialButton
 import com.google.android.material.snackbar.Snackbar
 import com.google.gson.Gson
 import com.listocalixto.android.ecommerce.R
-import com.listocalixto.android.ecommerce.activities.restaurant.RestaurantHomeActivity
+import com.listocalixto.android.ecommerce.activities.delivery.orders.map.DeliveryOrdersMapActivity
 import com.listocalixto.android.ecommerce.adapters.OrderProductsAdapter
 import com.listocalixto.android.ecommerce.models.Order
 import com.listocalixto.android.ecommerce.models.Product
@@ -36,7 +36,6 @@ class DeliveryOrdersDetailActivity : AppCompatActivity() {
     private var usersProvider: UsersProvider? = null
     private var sharedPref: SharedPref? = null
     private var currentUser: User? = null
-    private var idDelivery = ""
 
     private lateinit var layout: ConstraintLayout
     private lateinit var toolbar: Toolbar
@@ -56,19 +55,24 @@ class DeliveryOrdersDetailActivity : AppCompatActivity() {
         getUserFromSession()
         initProviders()
         setupViews()
-        hideViewsIfOrderHasDispatcher(order.status)
+        configureButtonAccordingStatus(order.status, order)
         setupRecyclerView(order.products)
         setupData(order)
         setupToolbar(order)
 
-        btnStartTrip.setOnClickListener { updateOrder(order) }
-
     }
 
-    private fun hideViewsIfOrderHasDispatcher(status: String?) {
+    private fun configureButtonAccordingStatus(status: String?, order: Order) {
         when(status) {
             "DISPATCHED" -> {
                 btnStartTrip.visibility = View.VISIBLE
+                btnStartTrip.text = getString(R.string.start_trip)
+                btnStartTrip.setOnClickListener { updateOrder(order) }
+            }
+            "ON THE WAY" -> {
+                btnStartTrip.visibility = View.VISIBLE
+                btnStartTrip.text = getString(R.string.back_to_the_map)
+                btnStartTrip.setOnClickListener { navigateToMap() }
             }
             else -> {
                 btnStartTrip.visibility = View.GONE
@@ -78,18 +82,17 @@ class DeliveryOrdersDetailActivity : AppCompatActivity() {
 
     private fun updateOrder(order: Order) {
         ProgressDialogFragment.showProgressBar(this)
-        order.idDelivery = idDelivery
-        ordersProvider?.updateToDispatched(order)?.enqueue(object : Callback<ResponseHttp> {
+        ordersProvider?.updateToOnTheWay(order)?.enqueue(object : Callback<ResponseHttp> {
             override fun onResponse(call: Call<ResponseHttp>, response: Response<ResponseHttp>) {
                 ProgressDialogFragment.hideProgressBar(this@DeliveryOrdersDetailActivity)
                 response.body()?.let {
                     if (it.isSuccess) {
                         Toast.makeText(
                             this@DeliveryOrdersDetailActivity,
-                            R.string.dispatcher_assigned_successfully,
+                            R.string.order_started,
                             Toast.LENGTH_SHORT
                         ).show()
-                        navigateToRestaurantHomeActivity()
+                        navigateToMap()
                     } else {
                         showSnackbar(
                             layout,
@@ -124,10 +127,9 @@ class DeliveryOrdersDetailActivity : AppCompatActivity() {
         })
     }
 
-    private fun navigateToRestaurantHomeActivity() {
-        val i = Intent(this, RestaurantHomeActivity::class.java)
+    private fun navigateToMap() {
+        val i = Intent(this, DeliveryOrdersMapActivity::class.java)
         startActivity(i)
-        finish()
     }
 
     private fun initSharedPref() {

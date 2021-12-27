@@ -99,4 +99,6 @@
     <string name="err_delivery_can_not_be_assigned">This delivery can\'t be assigned to this order</string>
     <string name="dispatcher">Dispatcher:</string>
     <string name="start_trip">Start trip</string>
+    <string name="order_started">Order has been started.</string>
+    <string name="back_to_the_map">Back to the map</string>
 </resources>

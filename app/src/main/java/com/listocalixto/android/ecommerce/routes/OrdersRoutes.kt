@@ -39,13 +39,13 @@ interface OrdersRoutes {
         @Header("Authorization") token: String
     ): Call<ResponseHttp>
 
-    @POST("orders/updateToOnTheWay")
+    @PUT("orders/updateToOnTheWay")
     fun updateToOnTheWay(
         @Body order: Order,
         @Header("Authorization") token: String
     ): Call<ResponseHttp>
 
-    @POST("orders/updateToDelivered")
+    @PUT("orders/updateToDelivered")
     fun updateToDelivered(
         @Body order: Order,
         @Header("Authorization") token: String
