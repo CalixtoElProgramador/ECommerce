@@ -89,4 +89,8 @@
     <string name="order">Order</string>
     <string name="date_of_order">Date of order:</string>
     <string name="deliver_to">Deliver to:</string>
+    <string name="quantity">Quantity:</string>
+    <string name="track_order">Track order</string>
+    <string name="status">Status:</string>
+    <string name="client">Client:</string>
 </resources>
