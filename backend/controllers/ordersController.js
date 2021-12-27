@@ -29,7 +29,39 @@ module.exports = {
             console.log(`Error: ${error}`);
             return res.status(501).json({
                 success: false,
-                message: 'An error was happened at obtain the orders by status',
+                message: 'An error was happened at obtain the orders by status and id_client',
+                error: error
+            });
+
+        }
+    },
+
+    async findByDeliveryAndStatus(req, res, next) {
+        try {
+
+            const id_delivery = req.params.id_delivery;
+            const status = req.params.status;
+            let data = await Order.findByDeliveryAndStatus(id_delivery, status)
+
+            /** 
+             * This small cycle is to change the timestamp of each of the commands to 
+             * something much more readable and normal for a person.  
+             */
+
+            data.forEach(d => {
+                d.timestamp = timeRelative(new Date().getTime(), d.timestamp);
+            });
+
+            // console.log('Order: ', data);
+
+            return res.status(201).json(data);
+
+        } catch (error) {
+
+            console.log(`Error: ${error}`);
+            return res.status(501).json({
+                success: false,
+                message: 'An error was happened at obtain the orders by status and id_delivery',
                 error: error
             });
 

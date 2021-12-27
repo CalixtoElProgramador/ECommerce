@@ -6,6 +6,7 @@ module.exports = (app) => {
     // GET
     app.get('/api/orders/findByStatus/:status', passport.authenticate('jwt', {session: false}), OrdersController.findByStatus);
     app.get('/api/orders/findByClientAndStatus/:id_client/:status', passport.authenticate('jwt', {session: false}), OrdersController.findByClientAndStatus);
+    app.get('/api/orders/findByDeliveryAndStatus/:id_delivery/:status', passport.authenticate('jwt', {session: false}), OrdersController.findByDeliveryAndStatus);
 
     // POST - SAVE DATA
     app.post('/api/orders/create', passport.authenticate('jwt', {session: false}), OrdersController.create);
