@@ -72,7 +72,7 @@ class DeliveryOrdersDetailActivity : AppCompatActivity() {
             "ON THE WAY" -> {
                 btnStartTrip.visibility = View.VISIBLE
                 btnStartTrip.text = getString(R.string.back_to_the_map)
-                btnStartTrip.setOnClickListener { navigateToMap() }
+                btnStartTrip.setOnClickListener { navigateToMap(order) }
             }
             else -> {
                 btnStartTrip.visibility = View.GONE
@@ -92,7 +92,7 @@ class DeliveryOrdersDetailActivity : AppCompatActivity() {
                             R.string.order_started,
                             Toast.LENGTH_SHORT
                         ).show()
-                        navigateToMap()
+                        navigateToMap(order)
                     } else {
                         showSnackbar(
                             layout,
@@ -127,8 +127,9 @@ class DeliveryOrdersDetailActivity : AppCompatActivity() {
         })
     }
 
-    private fun navigateToMap() {
+    private fun navigateToMap(order: Order) {
         val i = Intent(this, DeliveryOrdersMapActivity::class.java)
+        i.putExtra("order", order.toJson())
         startActivity(i)
     }
 

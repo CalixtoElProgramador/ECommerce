@@ -4,6 +4,7 @@ import android.Manifest
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Color
 import android.location.LocationManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -21,7 +22,10 @@ import com.google.android.gms.maps.model.*
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.color.MaterialColors
 import com.google.android.material.snackbar.Snackbar
+import com.google.gson.Gson
 import com.listocalixto.android.ecommerce.R
+import com.listocalixto.android.ecommerce.models.Order
+import com.maps.route.extensions.drawRouteOnMap
 
 class DeliveryOrdersMapActivity : AppCompatActivity(), OnMapReadyCallback {
 
@@ -32,8 +36,10 @@ class DeliveryOrdersMapActivity : AppCompatActivity(), OnMapReadyCallback {
     private var address = ""
     private var addressLatLng: LatLng? = null
     private var myLocationLatLng: LatLng? = null
+    private var order: Order? = null
 
     private var markerDelivery: Marker? = null
+    private var markerAddress: Marker? = null
 
     private lateinit var layout: ConstraintLayout
     private lateinit var toolbar: Toolbar
@@ -41,7 +47,11 @@ class DeliveryOrdersMapActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private val locationCallback = object : LocationCallback() {
         override fun onLocationResult(locationResult: LocationResult) {
-            var lastLocation = locationResult.lastLocation
+            val lastLocation = locationResult.lastLocation
+            myLocationLatLng = LatLng(lastLocation.latitude, lastLocation.longitude)
+            deleteDeliveryMarker()
+            addDeliveryMarker()
+            addAddressMarker()
 
         }
     }
@@ -49,6 +59,7 @@ class DeliveryOrdersMapActivity : AppCompatActivity(), OnMapReadyCallback {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_delivery_orders_map)
+        order = Gson().fromJson(intent.getStringExtra("order"), Order::class.java)
         setupViews()
         setupToolbar()
         val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as? SupportMapFragment
@@ -61,10 +72,40 @@ class DeliveryOrdersMapActivity : AppCompatActivity(), OnMapReadyCallback {
 
     }
 
+    override fun onMapReady(map: GoogleMap) {
+        googleMap = map
+        googleMap?.uiSettings?.isZoomControlsEnabled = true
+    }
+
+    private fun deleteDeliveryMarker() {
+        markerDelivery?.remove()
+    }
+
+    private fun drawRoute() {
+        val addressLocation = LatLng(order?.address?.lat!!, order?.address?.lng!!)
+        googleMap?.drawRouteOnMap(
+            getString(R.string.google_maps_key),
+            source = myLocationLatLng!!,
+            destination = addressLocation,
+            context = this,
+            color = Color.GREEN,
+            polygonWidth = 8,
+            markers = false
+        )
+    }
+
     private fun addDeliveryMarker() {
         markerDelivery = googleMap?.addMarker(
             MarkerOptions().position(myLocationLatLng!!).title("My position")
-                .icon(BitmapDescriptorFactory.fromResource(R.drawable.img_foco))
+                .icon(BitmapDescriptorFactory.fromResource(R.drawable.img_bike_man))
+        )
+    }
+
+    private fun addAddressMarker() {
+        val addressLocation = LatLng(order?.address?.lat!!, order?.address?.lng!!)
+        markerAddress = googleMap?.addMarker(
+            MarkerOptions().position(addressLocation).title("Delivery here")
+                .icon(BitmapDescriptorFactory.fromResource(R.drawable.img_client))
         )
     }
 
@@ -111,21 +152,24 @@ class DeliveryOrdersMapActivity : AppCompatActivity(), OnMapReadyCallback {
     private fun getLastLocation() {
         if (checkPermission()) {
             if (isLocationEnabled()) {
+                requestNewLocationData()
                 fusedLocationClient?.lastLocation?.addOnCompleteListener { task ->
                     val location = task.result
                     myLocationLatLng = LatLng(location.latitude, location.longitude)
+
+                    deleteDeliveryMarker()
                     addDeliveryMarker()
-                    location?.let {
-                        googleMap?.moveCamera(
-                            CameraUpdateFactory.newCameraPosition(
-                                CameraPosition.Builder().target(
-                                    LatLng(it.latitude, it.longitude)
-                                ).zoom(15f).build()
-                            )
+                    addAddressMarker()
+                    drawRoute()
+
+                    googleMap?.moveCamera(
+                        CameraUpdateFactory.newCameraPosition(
+                            CameraPosition.Builder().target(
+                                LatLng(myLocationLatLng?.latitude!!, myLocationLatLng?.longitude!!)
+                            ).zoom(15f).build()
                         )
-                    } ?: run {
-                        requestNewLocationData()
-                    }
+                    )
+
                 }
             } else {
                 Snackbar.make(
@@ -187,10 +231,6 @@ class DeliveryOrdersMapActivity : AppCompatActivity(), OnMapReadyCallback {
         toolbar.title = getString(R.string.address_map_activity_title)
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-    }
-
-    override fun onMapReady(map: GoogleMap) {
-        googleMap = map
     }
 
     override fun onRequestPermissionsResult(
