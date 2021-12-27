@@ -98,4 +98,5 @@
     <string name="dispatcher_assigned_successfully">Delivery was assigned successfully</string>
     <string name="err_delivery_can_not_be_assigned">This delivery can\'t be assigned to this order</string>
     <string name="dispatcher">Dispatcher:</string>
+    <string name="start_trip">Start trip</string>
 </resources>
