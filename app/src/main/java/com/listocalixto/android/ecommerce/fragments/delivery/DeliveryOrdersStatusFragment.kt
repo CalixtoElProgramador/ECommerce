@@ -1,4 +1,4 @@
-package com.listocalixto.android.ecommerce.fragments.restaurant
+package com.listocalixto.android.ecommerce.fragments.delivery
 
 import android.os.Bundle
 import android.util.Log
@@ -10,6 +10,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
 import com.google.gson.Gson
 import com.listocalixto.android.ecommerce.R
+import com.listocalixto.android.ecommerce.adapters.OrdersDeliveryAdapter
 import com.listocalixto.android.ecommerce.adapters.OrdersRestaurantAdapter
 import com.listocalixto.android.ecommerce.models.Order
 import com.listocalixto.android.ecommerce.models.User
@@ -20,7 +21,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class RestaurantOrdersStatusFragment : Fragment(R.layout.fragment_restaurant_orders_status) {
+class DeliveryOrdersStatusFragment : Fragment(R.layout.fragment_delivery_orders_status) {
 
     private var status = "PAID"
     private var currentUser: User? = null
@@ -55,7 +56,7 @@ class RestaurantOrdersStatusFragment : Fragment(R.layout.fragment_restaurant_ord
                     Log.d(TAG, "onResponse: $response")
                     Log.d(TAG, "onResponse: Body - ${response.body()}")
                     response.body()?.let {
-                        rvOrders.adapter = OrdersRestaurantAdapter(it, requireActivity())
+                        rvOrders.adapter = OrdersDeliveryAdapter(it, requireActivity())
                     } ?: run {
                         showSnackbar(
                             layout,
@@ -86,7 +87,7 @@ class RestaurantOrdersStatusFragment : Fragment(R.layout.fragment_restaurant_ord
 
     private fun setupViews(view: View) {
         layout = view.findViewById(R.id.restaurantOrdersStatus)
-        bottomNav = requireActivity().findViewById(R.id.bottomNav_restaurant)
+        bottomNav = requireActivity().findViewById(R.id.bottomNav_delivery)
         rvOrders = view.findViewById(R.id.rv_orders)
     }
 
@@ -101,7 +102,7 @@ class RestaurantOrdersStatusFragment : Fragment(R.layout.fragment_restaurant_ord
     }
 
     companion object {
-        private const val TAG = "ClientOrdersStatusFragment"
+        private const val TAG = "DeliveryOrdersStatusFragment"
     }
 
 
