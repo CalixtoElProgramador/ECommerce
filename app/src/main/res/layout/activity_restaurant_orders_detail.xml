@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/restaurantOrdersDetailLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activities.restaurant.orders.detail.RestaurantOrdersDetailActivity">
@@ -35,7 +36,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
         android:layout_marginEnd="16dp"
-        android:textAppearance="?attr/textAppearanceBody1"
+        android:textAppearance="?attr/textAppearanceBody2"
         app:layout_constraintBottom_toBottomOf="@id/client"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/client"
@@ -49,6 +50,7 @@
         android:layout_marginBottom="16dp"
         android:text="@string/client"
         android:textAppearance="?attr/textAppearanceSubtitle1"
+        android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@id/deliver"
         app:layout_constraintStart_toStartOf="@id/deliver" />
 
@@ -59,7 +61,7 @@
         android:layout_marginStart="4dp"
         android:layout_marginEnd="16dp"
         android:singleLine="true"
-        android:textAppearance="?attr/textAppearanceBody1"
+        android:textAppearance="?attr/textAppearanceBody2"
         app:layout_constraintBottom_toBottomOf="@id/deliver"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/deliver"
@@ -73,6 +75,7 @@
         android:layout_marginBottom="16dp"
         android:text="@string/deliver_to"
         android:textAppearance="?attr/textAppearanceSubtitle1"
+        android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@id/date"
         app:layout_constraintStart_toStartOf="@id/date" />
 
@@ -81,7 +84,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
-        android:textAppearance="?attr/textAppearanceBody1"
+        android:textAppearance="?attr/textAppearanceBody2"
         app:layout_constraintBottom_toBottomOf="@id/date"
         app:layout_constraintStart_toEndOf="@id/date"
         app:layout_constraintTop_toTopOf="@id/date"
@@ -94,6 +97,7 @@
         android:layout_marginBottom="16dp"
         android:text="@string/date_of_order"
         android:textAppearance="?attr/textAppearanceSubtitle1"
+        android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@id/status"
         app:layout_constraintStart_toStartOf="@id/status" />
 
@@ -102,7 +106,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+        android:textAppearance="?attr/textAppearanceBody2"
         app:layout_constraintBottom_toBottomOf="@id/status"
         app:layout_constraintStart_toEndOf="@id/status"
         app:layout_constraintTop_toTopOf="@id/status"
@@ -112,17 +116,30 @@
         android:id="@+id/status"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="32dp"
         android:text="@string/status"
         android:textAppearance="?attr/textAppearanceSubtitle1"
-        app:layout_constraintBottom_toTopOf="@id/spinner_deliveries"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@id/deliveries"
         app:layout_constraintStart_toStartOf="@id/total" />
+
+    <TextView
+        android:id="@+id/deliveries"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        android:text="@string/deliveries"
+        android:textAppearance="?attr/textAppearanceSubtitle1"
+        android:textColor="?attr/colorPrimary"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@id/spinner_deliveries"
+        app:layout_constraintStart_toStartOf="@id/spinner_deliveries" />
 
     <Spinner
         android:id="@+id/spinner_deliveries"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="48dp"
+        android:layout_marginBottom="32dp"
         app:layout_constraintBottom_toTopOf="@id/total"
         app:layout_constraintEnd_toEndOf="@id/totalPriceOrder"
         app:layout_constraintStart_toStartOf="@id/total" />
@@ -135,7 +152,7 @@
         android:textAlignment="textEnd"
         android:textAppearance="?attr/textAppearanceHeadline5"
         app:layout_constraintBottom_toBottomOf="@id/total"
-        app:layout_constraintEnd_toEndOf="@id/btn_trackOrder"
+        app:layout_constraintEnd_toEndOf="@id/btn_assignDelivery"
         app:layout_constraintStart_toEndOf="@id/total"
         app:layout_constraintTop_toTopOf="@id/total"
         tools:text="$ 1,000,000.00" />
@@ -148,11 +165,11 @@
         android:text="@string/total"
         android:textAppearance="?attr/textAppearanceHeadline5"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@id/btn_trackOrder"
-        app:layout_constraintStart_toStartOf="@id/btn_trackOrder" />
+        app:layout_constraintBottom_toTopOf="@id/btn_assignDelivery"
+        app:layout_constraintStart_toStartOf="@id/btn_assignDelivery" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_trackOrder"
+        android:id="@+id/btn_assignDelivery"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"

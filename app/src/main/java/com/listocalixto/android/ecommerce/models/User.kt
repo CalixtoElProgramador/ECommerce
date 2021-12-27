@@ -27,9 +27,7 @@ data class User(
 ) {
 
     override fun toString(): String {
-        return "User(id=$id, name='$name', lastname='$lastname', email='$email', phone='$phone', " +
-                "password='$password', image=$image, sessionToken=$sessionToken, isAvailable=$isAvailable, " +
-                "roles=$roles)"
+        return "$name $lastname"
     }
 
     fun toJson(): String {

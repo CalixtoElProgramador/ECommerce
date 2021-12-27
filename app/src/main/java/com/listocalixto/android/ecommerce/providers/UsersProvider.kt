@@ -1,6 +1,7 @@
 package com.listocalixto.android.ecommerce.providers
 
 import com.listocalixto.android.ecommerce.api.ApiRoutes
+import com.listocalixto.android.ecommerce.models.Category
 import com.listocalixto.android.ecommerce.models.ResponseHttp
 import com.listocalixto.android.ecommerce.models.User
 import com.listocalixto.android.ecommerce.routes.UsersRoutes
@@ -41,5 +42,7 @@ class UsersProvider(private val token: String? = null) {
     fun updateWithoutImage(user: User): Call<ResponseHttp>? {
         return userRoutesWithToken?.updateWithoutImage(user, token!!)
     }
+
+    fun getDeliveriesMen(): Call<ArrayList<User>>? = userRoutesWithToken?.getDeliveriesMen(token!!)
 
 }

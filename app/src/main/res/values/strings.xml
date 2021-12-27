@@ -94,4 +94,5 @@
     <string name="status">Status:</string>
     <string name="client">Client:</string>
     <string name="assign_a_delivery_man">Assign a delivery man</string>
+    <string name="deliveries">Deliveries</string>
 </resources>
